@@ -1,0 +1,459 @@
+/* ==========================================================================
+   RESET & BASE
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  line-height: 1.5;
+  color: #171717;
+  background: #f1f0ec;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY & UTILITIES
+   ========================================================================== */
+.sr-only {
+  position: absolute;
+  inset: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+}
+
+.heading {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #171717;
+  color: white;
+}
+.btn-primary:hover {
+  background: #000;
+}
+
+.btn-secondary {
+  background: white;
+  color: #171717;
+  border: 1px solid #171717;
+}
+.btn-secondary:hover {
+  background: #f5f5f5;
+}
+
+/* ==========================================================================
+   HEADER & TOPBAR
+   ========================================================================== */
+.topbar {
+  background: #000;
+  color: white;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.announcement-wrapper {
+  position: relative;
+  height: 20px;
+  overflow: hidden;
+}
+
+.announcement {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.announcement.active {
+  opacity: 1;
+}
+
+/* Header ───────────────────────────────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 16px 5vw;
+  background: #f1f0ec;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.logo {
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+
+.logo a {
+  display: block;
+}
+
+
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-shrink: 0;
+}
+
+.icon {
+  color: #111;
+  font-size: 1.125rem;
+  transition: opacity 0.3s ease;
+}
+.icon:hover {
+  opacity: 0.6;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #171717;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #171717;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* Desktop navigation */
+.main-nav {
+  display: none;
+}
+.main-nav ul {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.main-nav a {
+  color: #171717;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* Mobile slide-in menu */
+.mobile-menu {
+  position: fixed;
+  inset-block: 0 0;
+  inset-inline-start: -100%;
+  width: 80%;
+  max-width: 320px;
+  background: white;
+  transition: inset-inline-start 0.3s ease;
+  z-index: 1100;
+  overflow-y: auto;
+}
+.mobile-menu.active {
+  inset-inline-start: 0;
+}
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  font-size: 1.3rem;
+}
+.menu-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.mobile-menu-list {
+  list-style: none;
+}
+.mobile-menu-list li {
+  border-bottom: 1px solid #eee;
+}
+.mobile-menu-list a {
+  display: block;
+  padding: 16px 20px;
+  font-size: 1.1rem;
+  color: #333;
+  text-decoration: none;
+}
+.mobile-menu-list a:hover {
+  background: #f8f8f8;
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.video-hero {
+  position: relative;
+  height: 80vh;
+  min-height: 650px;
+  overflow: hidden;
+}
+.video-container {
+  position: absolute;
+  inset: 0;
+}
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  background: rgba(0,0,0,0.35);
+  padding: 0 5vw;
+}
+.hero-content h1 {
+  font-size: clamp(3rem, 8vw, 7rem);
+  margin-bottom: 1.5rem;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   CARDS / PRODUCTS
+   ========================================================================== */
+.collection-grid,
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 4rem 5vw;
+}
+
+.card,
+.product-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover,
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+.card img,
+.product-card img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+.card h3,
+.product-card h3 {
+  padding: 1.2rem;
+  font-size: 1.35rem;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer {
+  background: #171717;
+  color: white;
+  padding: 5rem 5vw 3rem;
+}
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 3rem;
+  margin-block-end: 4rem;
+}
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 2rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE ───────────────────────────────────────────────────────────────
+   ========================================================================== */
+
+/* Desktop ───────────────────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+  .header {
+    padding: 20px 5vw;
+    gap: 3rem;
+  }
+
+  .menu-toggle,
+  .mobile-menu {
+    display: none;
+  }
+
+  .main-nav {
+    display: block;
+  }
+
+  .logo {
+    flex: 0 0 auto;
+  }
+
+ 
+}
+
+/* Mobile ────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .header {
+    padding: 12px 4vw;
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+
+  .menu-toggle {
+    margin-right: auto;
+  }
+
+  .header-icons {
+    margin-left: auto;
+  }
+
+  .main-nav {
+    display: none;
+  }
+
+  .logo-image {
+    max-width: 130px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 3vw;
+  }
+
+  
+}
+.tabs{
+  justify-content: space-between;
+  padding-left: 80px;
+}
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+  transition: all 0.3s ease;   /* smooth animation */
+  border-radius: 30px;
+  height: 60px;
+  width: 200px;
+}
+
+/* Hover effect */
+.tab:hover {
+  background: black;
+  color: white;
+  transform: translateY(-3px);   /* small lift */
+}
+
+/* Active tab */
+.tab.active {
+  background: black;
+  color: white;
+}
+
+/* Product card spacing */
+/* .product-card {
+  margin-top: 20px;
+} */
+/* Product Container */
+.products {
+  display: flex;
+  flex-direction: row;   /* Row direction */
+  flex-wrap: wrap;       /* Allows wrapping to next line */
+  gap: 20px;             /* Space between items */
+  margin-top: 30px;
+  
+}
+
+/* Product Card */
+.product-card {
+   margin-top: 20px;
+  flex: 1 1 220px;       /* Flexible width */
+  max-width: 250px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 40px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  text-align: center;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Product Name */
+.product-card h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+/* Price */
+.product-card .price {
+  color: #e91e63;
+  font-weight: bold;
+}
+
+/* .card {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+.card:hover {
+  transform: translateY(-5px);
+} */
+
+
+
