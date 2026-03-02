@@ -4,8 +4,8 @@
 
 Project Name: DERU Apparel E-Commerce Website
 Version: 1.0
-Date: (add date)
-Prepared by: (your name / team name)
+Date: 28 02 2026
+Prepared by: 
 
 ⸻
 
