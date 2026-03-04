@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -13,6 +14,26 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard');
+        $totalProducts  = \App\Models\Product::count();
+        $totalCustomers = User::where('role', 'user')->count();
+
+        // These will be 0 until you build the Orders module
+        $totalOrders  = 0;
+        $totalRevenue = 0;
+        $recentOrders = collect();
+
+        $recentCustomers = User::where('role', 'user')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('admin.dashboard', compact(
+            'totalProducts',
+            'totalCustomers',
+            'totalOrders',
+            'totalRevenue',
+            'recentOrders',
+            'recentCustomers'
+        ));
     }
 }
