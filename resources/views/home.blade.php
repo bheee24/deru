@@ -185,9 +185,7 @@
   $total    = $subtotal + $shipping;
   $cartCount = array_sum(array_column($cart, 'quantity'));
 
-  // Mock order history — replace with DB query when Orders module is built:
-  // $orders = auth()->user()->orders()->latest()->get();
-  $orders = [];
+  // Orders loaded from route via compact('orders')
 @endphp
 
 <div style="display:flex;">
@@ -513,6 +511,7 @@
                 <th>Items</th>
                 <th>Total</th>
                 <th>Status</th>
+                <th>Card</th>
                 <th></th>
               </tr>
             </thead>
@@ -521,13 +520,16 @@
               <tr>
                 <td style="font-family:monospace; font-size:12px; color:#c9a96e;">{{ $order->reference }}</td>
                 <td style="color:#7a7a72;">{{ $order->created_at->format('d M Y') }}</td>
-                <td>{{ $order->items_count }}</td>
+                <td>{{ $order->items->count() }} {{ Str::plural('item', $order->items->count()) }}</td>
                 <td style="font-weight:600;">£{{ number_format($order->total, 2) }}</td>
                 <td>
-                  <span class="badge-status badge-{{ $order->status }}">{{ ucfirst($order->status) }}</span>
+                  <span style="font-size:9px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:4px 10px; border-radius:9999px; background:rgba(0,0,0,0.06); color:{{ $order->status_colour }};">
+                    {{ ucfirst($order->status) }}
+                  </span>
                 </td>
+                <td style="font-size:11px; color:#7a7a72;">{{ $order->card_summary }}</td>
                 <td>
-                  <a href="#" style="font-size:11px; color:#c9a96e; text-decoration:none; letter-spacing:0.05em;">View →</a>
+                  <a href="{{ route('orders.show', $order) }}" style="font-size:11px; color:#c9a96e; text-decoration:none; letter-spacing:0.05em;">View →</a>
                 </td>
               </tr>
               @endforeach
@@ -542,28 +544,238 @@
     ════════════════════════════════ --}}
     <div class="tab-panel" id="panel-profile">
 
+      {{-- Page heading --}}
       <div style="margin-bottom:2rem;">
         <p style="font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:#7a7a72; margin-bottom:4px;">Settings</p>
         <h1 style="font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; line-height:1;">My Profile</h1>
       </div>
 
-      <div style="background:white; border:1px solid rgba(0,0,0,0.06); padding:2rem; max-width:560px;">
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid rgba(0,0,0,0.06);">
-          <div style="width:56px; height:56px; border-radius:50%; background:#c9a96e; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-            <span style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:700; color:#0f0f0f;">
-              {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-            </span>
-          </div>
-          <div>
-            <p style="font-size:14px; font-weight:600; margin:0;">{{ auth()->user()->name }}</p>
-            <p style="font-size:12px; color:#7a7a72; margin:2px 0 0;">{{ auth()->user()->email }}</p>
-            <p style="font-size:11px; color:#7a7a72; margin:2px 0 0;">Member since {{ auth()->user()->created_at->format('F Y') }}</p>
-          </div>
-        </div>
+      @php $u = auth()->user(); @endphp
 
-        <p style="font-size:12px; color:#7a7a72; text-align:center;">
-          Profile editing coming soon.
+      {{-- ── Avatar / account summary ── --}}
+      <div style="background:white; border:1px solid rgba(0,0,0,0.06); padding:1.75rem 2rem; max-width:640px; margin-bottom:1.5rem; display:flex; align-items:center; gap:20px;">
+        <div style="width:64px; height:64px; border-radius:50%; background:#c9a96e; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:1.75rem; font-weight:700; color:#0f0f0f;">
+            {{ strtoupper(substr($u->name, 0, 1)) }}
+          </span>
+        </div>
+        <div>
+          <p style="font-size:15px; font-weight:600; margin:0;">{{ $u->name }}</p>
+          <p style="font-size:12px; color:#7a7a72; margin:3px 0 0;">{{ $u->email }}</p>
+          <p style="font-size:11px; color:#7a7a72; margin:3px 0 0;">Member since {{ $u->created_at->format('F Y') }}</p>
+        </div>
+      </div>
+
+      @php
+        $profileInput  = 'width:100%; padding:11px 14px; border:1px solid rgba(0,0,0,0.15); background:white; font-family:\'Montserrat\',sans-serif; font-size:13px; color:#0f0f0f; outline:none; transition:border-color 0.2s;';
+        $profileLabel  = 'display:block; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:6px;';
+        $profileSubmit = 'padding:11px 28px; background:#c9a96e; color:#0f0f0f; border:1px solid #c9a96e; font-family:\'Montserrat\',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.25s;';
+        $sectionHead   = 'font-family:\'Cormorant Garamond\',serif; font-size:1.3rem; font-weight:700; margin-bottom:1.25rem; padding-bottom:0.75rem; border-bottom:1px solid rgba(0,0,0,0.06);';
+        $card          = 'background:white; border:1px solid rgba(0,0,0,0.06); padding:1.75rem 2rem; max-width:640px; margin-bottom:1.5rem;';
+      @endphp
+
+      {{-- ── 1. Personal Information ── --}}
+      <div style="{{ $card }}">
+        <h3 style="{{ $sectionHead }}">
+          <i class="fas fa-user" style="color:#c9a96e; margin-right:8px; font-size:1rem;"></i> Personal Information
+        </h3>
+
+        @if(session('success_info'))
+          <div style="background:rgba(201,169,110,0.1); border:1px solid rgba(201,169,110,0.25); color:#b8903a; padding:9px 14px; font-size:12px; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+            <i class="fas fa-check-circle"></i> {{ session('success_info') }}
+          </div>
+        @endif
+
+        <form method="POST" action="{{ route('profile.info') }}">
+          @csrf
+          @method('PATCH')
+          <div class="row g-3">
+            <div class="col-6">
+              <label style="{{ $profileLabel }}">First Name</label>
+              <input type="text" name="first_name"
+                     value="{{ old('first_name', $u->first_name ?? explode(' ', $u->name)[0]) }}"
+                     style="{{ $profileInput }} {{ $errors->has('first_name') ? 'border-color:#dc2626;' : '' }}"
+                     required>
+              @error('first_name')<p style="font-size:11px; color:#dc2626; margin-top:4px;">{{ $message }}</p>@enderror
+            </div>
+            <div class="col-6">
+              <label style="{{ $profileLabel }}">Last Name</label>
+              <input type="text" name="last_name"
+                     value="{{ old('last_name', $u->last_name ?? (explode(' ', $u->name)[1] ?? '')) }}"
+                     style="{{ $profileInput }} {{ $errors->has('last_name') ? 'border-color:#dc2626;' : '' }}"
+                     required>
+              @error('last_name')<p style="font-size:11px; color:#dc2626; margin-top:4px;">{{ $message }}</p>@enderror
+            </div>
+            <div class="col-12">
+              <label style="{{ $profileLabel }}">Phone <span style="font-weight:400; text-transform:none; letter-spacing:0;">(optional)</span></label>
+              <input type="tel" name="phone"
+                     value="{{ old('phone', $u->phone) }}"
+                     placeholder="+44 7700 000000"
+                     style="{{ $profileInput }}">
+            </div>
+            <div class="col-12">
+              <button type="submit" style="{{ $profileSubmit }}">Save Changes</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      {{-- ── 2. Default Delivery Address ── --}}
+      <div style="{{ $card }}">
+        <h3 style="{{ $sectionHead }}">
+          <i class="fas fa-map-marker-alt" style="color:#c9a96e; margin-right:8px; font-size:1rem;"></i> Default Delivery Address
+        </h3>
+        <p style="font-size:12px; color:#7a7a72; margin-bottom:1.25rem; margin-top:-0.5rem;">
+          Saved here to pre-fill your checkout automatically.
         </p>
+
+        @if(session('success_address'))
+          <div style="background:rgba(201,169,110,0.1); border:1px solid rgba(201,169,110,0.25); color:#b8903a; padding:9px 14px; font-size:12px; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+            <i class="fas fa-check-circle"></i> {{ session('success_address') }}
+          </div>
+        @endif
+
+        <form method="POST" action="{{ route('profile.address') }}">
+          @csrf
+          @method('PATCH')
+          <div class="row g-3">
+            <div class="col-12">
+              <label style="{{ $profileLabel }}">Address Line 1</label>
+              <input type="text" name="address_line1"
+                     value="{{ old('address_line1', $u->address_line1) }}"
+                     placeholder="123 Example Street"
+                     style="{{ $profileInput }} {{ $errors->has('address_line1') ? 'border-color:#dc2626;' : '' }}"
+                     required>
+              @error('address_line1')<p style="font-size:11px; color:#dc2626; margin-top:4px;">{{ $message }}</p>@enderror
+            </div>
+            <div class="col-12">
+              <label style="{{ $profileLabel }}">Address Line 2 <span style="font-weight:400; text-transform:none; letter-spacing:0;">(optional)</span></label>
+              <input type="text" name="address_line2"
+                     value="{{ old('address_line2', $u->address_line2) }}"
+                     style="{{ $profileInput }}">
+            </div>
+            <div class="col-6">
+              <label style="{{ $profileLabel }}">City</label>
+              <input type="text" name="city"
+                     value="{{ old('city', $u->city) }}"
+                     placeholder="London"
+                     style="{{ $profileInput }} {{ $errors->has('city') ? 'border-color:#dc2626;' : '' }}"
+                     required>
+              @error('city')<p style="font-size:11px; color:#dc2626; margin-top:4px;">{{ $message }}</p>@enderror
+            </div>
+            <div class="col-6">
+              <label style="{{ $profileLabel }}">Postcode</label>
+              <input type="text" name="postcode"
+                     value="{{ old('postcode', $u->postcode) }}"
+                     placeholder="SW1A 1AA"
+                     style="{{ $profileInput }} {{ $errors->has('postcode') ? 'border-color:#dc2626;' : '' }}"
+                     required>
+              @error('postcode')<p style="font-size:11px; color:#dc2626; margin-top:4px;">{{ $message }}</p>@enderror
+            </div>
+            <div class="col-12">
+              <label style="{{ $profileLabel }}">Country</label>
+              <select name="country"
+                      style="{{ $profileInput }} cursor:pointer;"
+                      required>
+                <option value="">Select country...</option>
+                @php
+                  $countries = ['GB'=>'United Kingdom','NG'=>'Nigeria','US'=>'United States',
+                                'IE'=>'Ireland','CA'=>'Canada','AU'=>'Australia',
+                                'GH'=>'Ghana','ZA'=>'South Africa'];
+                @endphp
+                @foreach($countries as $code => $label)
+                  <option value="{{ $code }}" {{ old('country', $u->country ?? 'GB') === $code ? 'selected' : '' }}>
+                    {{ $label }}
+                  </option>
+                @endforeach
+              </select>
+            </div>
+            <div class="col-12">
+              <button type="submit" style="{{ $profileSubmit }}">Save Address</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      {{-- ── 3. Update Email ── --}}
+      <div style="{{ $card }}">
+        <h3 style="{{ $sectionHead }}">
+          <i class="fas fa-envelope" style="color:#c9a96e; margin-right:8px; font-size:1rem;"></i> Email Address
+        </h3>
+
+        @if(session('success_email'))
+          <div style="background:rgba(201,169,110,0.1); border:1px solid rgba(201,169,110,0.25); color:#b8903a; padding:9px 14px; font-size:12px; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+            <i class="fas fa-check-circle"></i> {{ session('success_email') }}
+          </div>
+        @endif
+
+        <form method="POST" action="{{ route('profile.email') }}">
+          @csrf
+          @method('PATCH')
+          <div class="row g-3">
+            <div class="col-12">
+              <label style="{{ $profileLabel }}">New Email Address</label>
+              <input type="email" name="email"
+                     value="{{ old('email', $u->email) }}"
+                     style="{{ $profileInput }} {{ $errors->has('email') ? 'border-color:#dc2626;' : '' }}"
+                     required>
+              @error('email')<p style="font-size:11px; color:#dc2626; margin-top:4px;">{{ $message }}</p>@enderror
+            </div>
+            <div class="col-12">
+              <label style="{{ $profileLabel }}">Current Password <span style="font-weight:400; text-transform:none; letter-spacing:0;">to confirm</span></label>
+              <input type="password" name="current_password"
+                     placeholder="Enter your current password"
+                     style="{{ $profileInput }} {{ $errors->has('current_password_email') ? 'border-color:#dc2626;' : '' }}">
+              @error('current_password_email')<p style="font-size:11px; color:#dc2626; margin-top:4px;">{{ $message }}</p>@enderror
+            </div>
+            <div class="col-12">
+              <button type="submit" style="{{ $profileSubmit }}">Update Email</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      {{-- ── 4. Change Password ── --}}
+      <div style="{{ $card }}">
+        <h3 style="{{ $sectionHead }}">
+          <i class="fas fa-lock" style="color:#c9a96e; margin-right:8px; font-size:1rem;"></i> Change Password
+        </h3>
+
+        @if(session('success_password'))
+          <div style="background:rgba(201,169,110,0.1); border:1px solid rgba(201,169,110,0.25); color:#b8903a; padding:9px 14px; font-size:12px; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+            <i class="fas fa-check-circle"></i> {{ session('success_password') }}
+          </div>
+        @endif
+
+        <form method="POST" action="{{ route('profile.password') }}">
+          @csrf
+          @method('PATCH')
+          <div class="row g-3">
+            <div class="col-12">
+              <label style="{{ $profileLabel }}">Current Password</label>
+              <input type="password" name="current_password"
+                     placeholder="Your current password"
+                     style="{{ $profileInput }} {{ $errors->has('current_password_pw') ? 'border-color:#dc2626;' : '' }}">
+              @error('current_password_pw')<p style="font-size:11px; color:#dc2626; margin-top:4px;">{{ $message }}</p>@enderror
+            </div>
+            <div class="col-12">
+              <label style="{{ $profileLabel }}">New Password</label>
+              <input type="password" name="password"
+                     placeholder="Min 8 characters, mixed case + numbers"
+                     style="{{ $profileInput }} {{ $errors->has('password') ? 'border-color:#dc2626;' : '' }}">
+              @error('password')<p style="font-size:11px; color:#dc2626; margin-top:4px;">{{ $message }}</p>@enderror
+            </div>
+            <div class="col-12">
+              <label style="{{ $profileLabel }}">Confirm New Password</label>
+              <input type="password" name="password_confirmation"
+                     placeholder="Repeat new password"
+                     style="{{ $profileInput }}">
+            </div>
+            <div class="col-12">
+              <button type="submit" style="{{ $profileSubmit }}">Change Password</button>
+            </div>
+          </div>
+        </form>
       </div>
 
     </div>

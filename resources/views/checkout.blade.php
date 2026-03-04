@@ -185,49 +185,49 @@
               <div class="col-6">
                 <label class="checkout-label">First Name</label>
                 <input type="text" name="first_name" class="checkout-input @error('first_name') is-invalid @enderror"
-                       value="{{ old('first_name', explode(' ', auth()->user()->name)[0] ?? '') }}" required>
+                       value="{{ old('first_name', auth()->user()->first_name ?? explode(' ', auth()->user()->name)[0] ?? '') }}" required>
                 @error('first_name')<p style="font-size:11px;color:#dc2626;margin-top:4px;">{{ $message }}</p>@enderror
               </div>
               <div class="col-6">
                 <label class="checkout-label">Last Name</label>
                 <input type="text" name="last_name" class="checkout-input @error('last_name') is-invalid @enderror"
-                       value="{{ old('last_name', explode(' ', auth()->user()->name)[1] ?? '') }}" required>
+                       value="{{ old('last_name', auth()->user()->last_name ?? (explode(' ', auth()->user()->name)[1] ?? '')) }}" required>
                 @error('last_name')<p style="font-size:11px;color:#dc2626;margin-top:4px;">{{ $message }}</p>@enderror
               </div>
               <div class="col-12">
                 <label class="checkout-label">Address Line 1</label>
                 <input type="text" name="address_line1" class="checkout-input @error('address_line1') is-invalid @enderror"
-                       value="{{ old('address_line1') }}" placeholder="123 Example Street" required>
+                       value="{{ old('address_line1', auth()->user()->address_line1) }}" placeholder="123 Example Street" required>
                 @error('address_line1')<p style="font-size:11px;color:#dc2626;margin-top:4px;">{{ $message }}</p>@enderror
               </div>
               <div class="col-12">
                 <label class="checkout-label">Address Line 2 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
-                <input type="text" name="address_line2" class="checkout-input" value="{{ old('address_line2') }}">
+                <input type="text" name="address_line2" class="checkout-input" value="{{ old('address_line2', auth()->user()->address_line2) }}">
               </div>
               <div class="col-6">
                 <label class="checkout-label">City</label>
                 <input type="text" name="city" class="checkout-input @error('city') is-invalid @enderror"
-                       value="{{ old('city') }}" placeholder="London" required>
+                       value="{{ old('city', auth()->user()->city) }}" placeholder="London" required>
                 @error('city')<p style="font-size:11px;color:#dc2626;margin-top:4px;">{{ $message }}</p>@enderror
               </div>
               <div class="col-6">
                 <label class="checkout-label">Postcode</label>
                 <input type="text" name="postcode" class="checkout-input @error('postcode') is-invalid @enderror"
-                       value="{{ old('postcode') }}" placeholder="SW1A 1AA" required>
+                       value="{{ old('postcode', auth()->user()->postcode) }}" placeholder="SW1A 1AA" required>
                 @error('postcode')<p style="font-size:11px;color:#dc2626;margin-top:4px;">{{ $message }}</p>@enderror
               </div>
               <div class="col-12">
                 <label class="checkout-label">Country</label>
                 <select name="country" class="checkout-input" required>
                   <option value="">Select country...</option>
-                  <option value="GB" selected>United Kingdom</option>
-                  <option value="NG">Nigeria</option>
-                  <option value="US">United States</option>
-                  <option value="IE">Ireland</option>
-                  <option value="CA">Canada</option>
-                  <option value="AU">Australia</option>
-                  <option value="GH">Ghana</option>
-                  <option value="ZA">South Africa</option>
+                  <option value="GB" {{ old('country', auth()->user()->country ?? 'GB') === 'GB' ? 'selected' : '' }}>United Kingdom</option>
+                  <option value="NG" {{ old('country', auth()->user()->country) === 'NG' ? 'selected' : '' }}>Nigeria</option>
+                  <option value="US" {{ old('country', auth()->user()->country) === 'US' ? 'selected' : '' }}>United States</option>
+                  <option value="IE" {{ old('country', auth()->user()->country) === 'IE' ? 'selected' : '' }}>Ireland</option>
+                  <option value="CA" {{ old('country', auth()->user()->country) === 'CA' ? 'selected' : '' }}>Canada</option>
+                  <option value="AU" {{ old('country', auth()->user()->country) === 'AU' ? 'selected' : '' }}>Australia</option>
+                  <option value="GH" {{ old('country', auth()->user()->country) === 'GH' ? 'selected' : '' }}>Ghana</option>
+                  <option value="ZA" {{ old('country', auth()->user()->country) === 'ZA' ? 'selected' : '' }}>South Africa</option>
                 </select>
               </div>
             </div>

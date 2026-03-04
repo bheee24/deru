@@ -5,11 +5,15 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
-
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
+
+use App\Http\Controllers\AdminOrderController;
 
 // ── Welcome (passes products + categories to view) ──
 Route::get('/', function () {
@@ -30,7 +34,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', function () {
+    $orders = auth()->user()
+                    ->orders()
+                    ->with('items')
+                    ->latest()
+                    ->get();
+    return view('home', compact('orders'));
+})->middleware('auth')->name('home');
+
+Route::get('/products/{product:slug}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
+
 
 // ── Cart (session-based, guests + logged in) ──
 Route::get('/cart',           [CartController::class, 'index'])->name('cart.index');
@@ -50,7 +64,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
     // Products
-    Route::resource('products', ProductController::class)->except(['show']);
+    Route::resource('products', AdminProductController::class)->except(['show']);
 
     // Categories
     Route::resource('categories', CategoryController::class)->except(['show']);
@@ -60,6 +74,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/customers/{customer}',          [CustomerController::class, 'show'])->name('customers.show');
     Route::patch('/customers/{customer}/toggle', [CustomerController::class, 'toggle'])->name('customers.toggle');
 
+
+    // Orders 
+    Route::get('/orders',           [AdminOrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}',   [AdminOrderController::class, 'show'])->name('orders.show');
+    Route::patch('/orders/{order}', [AdminOrderController::class, 'update'])->name('orders.update');
+
 });
 
 
@@ -68,5 +88,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout',             [CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/checkout/confirmation', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
     Route::post('/checkout/update-intent',  [CheckoutController::class, 'updateIntent'])->name('checkout.updateIntent');
-    
+
+    Route::patch('/profile/info',     [ProfileController::class, 'updateInfo'])->name('profile.info');
+    Route::patch('/profile/address',  [ProfileController::class, 'updateAddress'])->name('profile.address');
+    Route::patch('/profile/email',    [ProfileController::class, 'updateEmail'])->name('profile.email');
+    Route::patch('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+
+    // Customer order detail
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
 });

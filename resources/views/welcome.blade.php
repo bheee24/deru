@@ -66,6 +66,23 @@
     }
     .site-header.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
 
+    /* ── Currency Switcher ── */
+    .currency-switcher {
+      position: relative; display: flex; align-items: center;
+    }
+    .currency-select {
+      appearance: none; -webkit-appearance: none;
+      background: transparent; border: 1px solid rgba(0,0,0,0.15);
+      font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; color: #0f0f0f; padding: 5px 24px 5px 10px;
+      cursor: pointer; outline: none; transition: border-color 0.2s ease;
+    }
+    .currency-select:hover, .currency-select:focus { border-color: #c9a96e; }
+    .currency-switcher::after {
+      content: '▾'; position: absolute; right: 8px; font-size: 9px;
+      color: #7a7a72; pointer-events: none;
+    }
+
     /* ── Mobile Slide Menu ── */
     .mobile-menu {
       position: fixed; inset-block: 0; left: -100%;
@@ -294,25 +311,48 @@
   </div>
 
   {{-- Icons Right --}}
-  <div class="d-flex align-items-center gap-3 justify-content-end" style="flex:1;">
+  <div class="d-flex align-items-center gap-4 justify-content-end" style="flex:1;">
+
+    {{-- Currency Switcher --}}
+    <div class="currency-switcher d-none d-lg-flex">
+      <select class="currency-select" id="currencySelect" onchange="setCurrency(this.value)">
+        <option value="GBP">£ GBP</option>
+        <option value="USD">$ USD</option>
+        <option value="EUR">€ EUR</option>
+        <option value="NGN">₦ NGN</option>
+        <option value="GHS">₵ GHS</option>
+        <option value="ZAR">R ZAR</option>
+        <option value="CAD">$ CAD</option>
+        <option value="AUD">$ AUD</option>
+      </select>
+    </div>
+
     <a href="#" class="text-decoration-none" style="color:#0f0f0f;">
       <i class="fas fa-search" style="font-size:15px;"></i>
     </a>
-
-    @auth
-      <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : url('/home') }}"
-         class="text-decoration-none d-flex align-items-center gap-2"
-         style="color:#0f0f0f; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; font-weight:500;">
-        <i class="fas fa-user" style="font-size:14px;"></i>
-        <span class="d-none d-xl-inline">{{ auth()->user()->isAdmin() ? 'Admin' : auth()->user()->name }}</span>
-      </a>
-    @else
-      <a href="{{ route('login') }}" class="text-decoration-none"
-         style="color:#0f0f0f; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; font-weight:500;">
-        Login
-      </a>
-    @endauth
-
+    @if (Route::has('login'))
+     @auth
+       <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : url('/home') }}"
+          class="btn-deru-primary w-25 text-center d-block mb-2" style="text-decoration:none;">
+         {{ auth()->user()->isAdmin() ? 'Admin Panel' : auth()->user()->name }}
+       </a>
+       <form method="POST" action="{{ route('logout') }}">
+         @csrf
+         <button type="submit"
+                 style="width:100%; background:none; border:none; color:rgba(255,255,255,0.4); font-family:'Montserrat',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; padding:10px 0;">
+           Sign Out
+         </button>
+       </form>
+     @else
+       <a href="{{ route('login') }}" class="btn-deru-primary w-25 text-center d-block mb-2" style="text-decoration:none;">Login</a>
+       @if (Route::has('register'))
+         <a href="{{ route('register') }}" class="d-block text-center mt-3"
+            style="color:rgba(255,255,255,0.5); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none;">
+           Create Account
+         </a>
+       @endif
+     @endauth
+    @endif
     @php $cartCount = array_sum(array_column(session()->get('cart', []), 'quantity')); @endphp
     <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative" style="color:#0f0f0f;">
       <i class="fas fa-shopping-bag" style="font-size:15px;"></i>
@@ -356,6 +396,28 @@
         @endauth
       @endif
     </li>
+
+    {{-- Currency in mobile menu --}}
+    <li style="padding:0 1rem 1.5rem;">
+      <p style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:8px; padding:0 4px;">Currency</p>
+      <div class="currency-switcher" style="width:100%;">
+        <select class="currency-select" id="currencySelectMobile" onchange="setCurrency(this.value)"
+                style="width:100%; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.15);">
+          <option value="GBP">£ GBP — British Pound</option>
+          <option value="USD">$ USD — US Dollar</option>
+          <option value="EUR">€ EUR — Euro</option>
+          <option value="NGN">₦ NGN — Nigerian Naira</option>
+          <option value="GHS">₵ GHS — Ghanaian Cedi</option>
+          <option value="ZAR">R ZAR — South African Rand</option>
+          <option value="CAD">C$ CAD — Canadian Dollar</option>
+          <option value="AUD">A$ AUD — Australian Dollar</option>
+        </select>
+      </div>
+      <p style="font-size:10px; color:rgba(255,255,255,0.25); margin-top:8px; padding:0 4px; line-height:1.5;">
+        Display only. Checkout is always processed in GBP.
+      </p>
+    </li>
+
   </ul>
 </nav>
 
@@ -519,22 +581,46 @@
                 </div>
               @endif
 
-              {{-- Add to Bag button — visible always on mobile, hover on desktop --}}
-              <button
-                class="position-absolute bottom-0 start-0 end-0 m-3 btn-deru-primary text-center border-0 product-add-btn"
-                style="transition: opacity 0.3s ease; opacity:0; justify-content:center;"
-                data-product-id="{{ $product->id }}"
-                data-product-name="{{ $product->name }}"
-                data-product-price="{{ $product->price }}"
-                data-product-img="{{ $product->image ? asset('storage/' . $product->image) : '' }}"
-              >
-                <i class="fas fa-shopping-bag" style="font-size:10px;"></i>
-                Add to Bag
-              </button>
+              {{-- Hover overlay — two buttons ── --}}
+              <div class="product-card-overlay position-absolute bottom-0 start-0 end-0 m-2"
+                   style="display:flex; flex-direction:column; gap:6px; opacity:0; transition:opacity 0.3s ease;">
+
+                <button
+                  class="btn-deru-primary text-center border-0 product-add-btn"
+                  style="width:100%; justify-content:center; padding:10px; font-size:10px;"
+                  data-product-id="{{ $product->id }}"
+                  data-product-name="{{ $product->name }}"
+                  data-product-price="{{ $product->price }}"
+                  data-product-img="{{ $product->image ? asset('storage/' . $product->image) : '' }}"
+                >
+                  <i class="fas fa-shopping-bag" style="font-size:9px;"></i> Add to Bag
+                </button>
+
+                <a href="{{ route('products.show', $product) }}"
+                   style="display:flex; align-items:center; justify-content:center; gap:6px;
+                          width:100%; padding:8px; background:rgba(241,240,236,0.92);
+                          color:#0f0f0f; font-family:'Montserrat',sans-serif; font-size:10px;
+                          font-weight:600; letter-spacing:0.15em; text-transform:uppercase;
+                          text-decoration:none; border:1px solid rgba(0,0,0,0.12);
+                          transition:background 0.2s ease;">
+                  <i class="fas fa-eye" style="font-size:9px;"></i> View Product
+                </a>
+
+              </div>
             </div>
+
+            {{-- Card info — product name links to product page ── --}}
             <div class="p-3">
-              <h4 style="font-size:13px; font-weight:500; letter-spacing:0.03em; margin-bottom:4px;">{{ $product->name }}</h4>
-              <p style="font-size:13px; font-weight:600; color:#0f0f0f; margin:0;">£{{ number_format($product->price, 2) }}</p>
+              <a href="{{ route('products.show', $product) }}" style="text-decoration:none; color:inherit;">
+                <h4 style="font-size:13px; font-weight:500; letter-spacing:0.03em; margin-bottom:4px; transition:color 0.2s;"
+                    onmouseover="this.style.color='#c9a96e'" onmouseout="this.style.color='inherit'">
+                  {{ $product->name }}
+                </h4>
+              </a>
+              <p style="font-size:13px; font-weight:600; color:#0f0f0f; margin:0;"
+                 data-price-gbp="{{ $product->price }}">
+                <span class="price-display">£{{ number_format($product->price, 2) }}</span>
+              </p>
             </div>
           </div>
         </div>
@@ -688,13 +774,14 @@
     document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 20);
   });
 
-  // ── Product Card Add-to-Bag Hover ──
+  // ── Product Card Hover — show overlay ──
   document.querySelectorAll('.product-card').forEach(card => {
-    const btn = card.querySelector('.product-add-btn');
-    if (!btn) return;
-    card.addEventListener('mouseenter', () => btn.style.opacity = '1');
+    const overlay = card.querySelector('.product-card-overlay');
+    if (!overlay) return;
+    card.addEventListener('mouseenter', () => overlay.style.opacity = '1');
     card.addEventListener('mouseleave', () => {
-      if (!btn.classList.contains('adding')) btn.style.opacity = '0';
+      const addBtn = overlay.querySelector('.product-add-btn');
+      if (!addBtn || !addBtn.classList.contains('adding')) overlay.style.opacity = '0';
     });
   });
 
@@ -804,6 +891,55 @@
   }
 
   // ── Tabs are now real links (?category=slug) — no JS needed ──
+
+  // ─────────────────────────────────────────────
+  // CURRENCY SWITCHER
+  // Rates are approximate — payment always converts back to GBP
+  // ─────────────────────────────────────────────
+  const CURRENCIES = {
+    GBP: { symbol: '£',  rate: 1        },
+    USD: { symbol: '$',  rate: 1.27     },
+    EUR: { symbol: '€',  rate: 1.17     },
+    NGN: { symbol: '₦',  rate: 2050     },
+    GHS: { symbol: '₵',  rate: 19.5     },
+    ZAR: { symbol: 'R',  rate: 23.5     },
+    CAD: { symbol: 'C$', rate: 1.73     },
+    AUD: { symbol: 'A$', rate: 1.95     },
+  };
+
+  function formatCurrency(amountGBP, currency) {
+    const { symbol, rate } = CURRENCIES[currency];
+    const converted = amountGBP * rate;
+    // NGN and ZAR look better without decimals
+    const decimals = ['NGN', 'GHS', 'ZAR'].includes(currency) ? 0 : 2;
+    return symbol + new Intl.NumberFormat('en-GB', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(converted);
+  }
+
+  function applyPrices(currency) {
+    document.querySelectorAll('[data-price-gbp]').forEach(el => {
+      const gbp   = parseFloat(el.dataset.priceGbp);
+      const span  = el.querySelector('.price-display');
+      if (span) span.textContent = formatCurrency(gbp, currency);
+    });
+  }
+
+  function setCurrency(currency) {
+    if (!CURRENCIES[currency]) return;
+    localStorage.setItem('deru_currency', currency);
+    applyPrices(currency);
+    // Sync both selects (desktop header + mobile menu)
+    document.querySelectorAll('.currency-select').forEach(s => s.value = currency);
+  }
+
+  // ── On page load — restore saved preference ──
+  (function initCurrency() {
+    const saved = localStorage.getItem('deru_currency') || 'GBP';
+    document.querySelectorAll('.currency-select').forEach(s => s.value = saved);
+    if (saved !== 'GBP') applyPrices(saved);
+  })();
 </script>
 
 </body>
