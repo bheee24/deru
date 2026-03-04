@@ -9,6 +9,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 
+use App\Http\Controllers\CheckoutController;
+
 // ── Welcome (passes products + categories to view) ──
 Route::get('/', function () {
     $categories = \App\Models\Category::withCount('products')->ordered()->get();
@@ -58,4 +60,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/customers/{customer}',          [CustomerController::class, 'show'])->name('customers.show');
     Route::patch('/customers/{customer}/toggle', [CustomerController::class, 'toggle'])->name('customers.toggle');
 
+});
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout',              [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout',             [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/checkout/confirmation', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
+    Route::post('/checkout/update-intent',  [CheckoutController::class, 'updateIntent'])->name('checkout.updateIntent');
+    
 });
