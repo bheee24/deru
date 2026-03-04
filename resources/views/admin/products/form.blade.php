@@ -19,6 +19,23 @@
       @csrf
       @if(isset($product)) @method('PUT') @endif
 
+      {{-- Category --}}
+      <div style="margin-bottom:1.5rem;">
+        <label class="deru-label-admin">Category</label>
+        <select name="category_id" class="deru-input-admin @error('category_id') border-red-400 @enderror">
+          <option value="">— Uncategorised —</option>
+          @foreach($categories as $cat)
+            <option value="{{ $cat->id }}"
+              {{ old('category_id', $product->category_id ?? '') == $cat->id ? 'selected' : '' }}>
+              {{ $cat->name }}
+            </option>
+          @endforeach
+        </select>
+        @error('category_id')
+          <p style="font-size:11px; color:#dc2626; margin-top:5px;">{{ $message }}</p>
+        @enderror
+      </div>
+
       {{-- Name --}}
       <div style="margin-bottom:1.5rem;">
         <label class="deru-label-admin">Product Name</label>
@@ -58,7 +75,6 @@
       <div style="margin-bottom:2rem;">
         <label class="deru-label-admin">Product Image</label>
 
-        {{-- Current image preview --}}
         @if(isset($product) && $product->image)
           <div style="margin-bottom:1rem;">
             <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
@@ -70,7 +86,6 @@
         <input type="file" name="image" accept="image/*"
                class="deru-input-admin @error('image') border-red-400 @enderror"
                style="padding:8px 14px;" id="imageInput">
-        {{-- Preview new image before upload --}}
         <img id="imagePreview" src="#" alt="Preview"
              style="display:none; width:120px; height:120px; object-fit:cover; margin-top:10px; border:1px solid rgba(0,0,0,0.08);">
         @error('image')
@@ -93,7 +108,6 @@
 
 @push('scripts')
 <script>
-  // Image preview
   document.getElementById('imageInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;

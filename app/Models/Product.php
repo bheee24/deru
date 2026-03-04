@@ -16,7 +16,8 @@ class Product extends Model
         'summary',
         'image',
         "description",
-        "product_unique_id"
+        "product_unique_id",
+        "category_id"
     ];
 
     protected $casts = [
@@ -33,4 +34,9 @@ class Product extends Model
                $product->product_unique_id = Str::orderedUuid();
            });
        }
+
+    public function category()
+    {
+            return $this->belongsTo(Category::class);
+    }
 }

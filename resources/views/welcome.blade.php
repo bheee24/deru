@@ -405,53 +405,75 @@
         <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:700; line-height:1;">Our Collections</h2>
       </div>
 
-      @php
-        $collections = [
-          ['title' => 'Beyond Ordinary', 'count' => 6,  'tag' => 'New',  'img' => 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=800&q=80'],
-          ['title' => 'Fragrance',       'count' => 2,  'tag' => '',     'img' => 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=800&q=80'],
-          ['title' => 'Accessories',     'count' => 12, 'tag' => 'Hot',  'img' => 'https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?w=800&q=80'],
-        ];
-      @endphp
-
+      @if($categories->isEmpty())
+        <p style="text-align:center; color:#7a7a72; font-size:13px;">No collections yet.</p>
+      @else
       <div class="row g-3">
-        {{-- Large card --}}
+
+        {{-- First category — large card --}}
         <div class="col-12 col-md-6">
-          <div class="collection-card h-100">
-            <img src="{{ $collections[0]['img'] }}" alt="{{ $collections[0]['title'] }}" style="min-height:500px;">
+          @with($categories->first())
+          <a href="{{ url('/?category=' . $categories->first()->slug) }}" style="text-decoration:none;" class="collection-card h-100 d-block">
+            @if($categories->first()->cover_image)
+              <img src="{{ asset('storage/' . $categories->first()->cover_image) }}"
+                   alt="{{ $categories->first()->name }}" style="min-height:500px;">
+            @else
+              <div style="min-height:500px; width:100%; background:#1a1a1a;"></div>
+            @endif
             <div class="collection-card-overlay"></div>
             <div class="collection-card-content">
-              @if($collections[0]['tag'])
-                <span class="badge mb-2" style="background:#c9a96e; color:#0f0f0f; font-size:9px; letter-spacing:0.15em; font-weight:600; padding:5px 10px; border-radius:0;">{{ $collections[0]['tag'] }}</span>
+              @if($categories->first()->tag)
+                <span class="badge mb-2" style="background:#c9a96e; color:#0f0f0f; font-size:9px; letter-spacing:0.15em; font-weight:600; padding:5px 10px; border-radius:0;">
+                  {{ $categories->first()->tag }}
+                </span>
               @endif
-              <h3 style="font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:white; line-height:1.1; margin-bottom:0.5rem;">{{ $collections[0]['title'] }}</h3>
-              <p style="font-size:12px; color:rgba(255,255,255,0.5); letter-spacing:0.05em; margin-bottom:1rem;">{{ $collections[0]['count'] }} styles</p>
-              <a href="#" style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#c9a96e; text-decoration:none; font-weight:600;">Shop Now →</a>
+              <h3 style="font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:white; line-height:1.1; margin-bottom:0.5rem;">
+                {{ $categories->first()->name }}
+              </h3>
+              <p style="font-size:12px; color:rgba(255,255,255,0.5); letter-spacing:0.05em; margin-bottom:1rem;">
+                {{ $categories->first()->products_count }} {{ Str::plural('style', $categories->first()->products_count) }}
+              </p>
+              <span style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#c9a96e; font-weight:600;">Shop Now →</span>
             </div>
-          </div>
+          </a>
+          @endwith
         </div>
 
-        {{-- Two stacked cards --}}
+        {{-- Remaining categories — stacked cards --}}
         <div class="col-12 col-md-6">
           <div class="row g-3 h-100">
-            @foreach(array_slice($collections, 1) as $col)
+            @foreach($categories->skip(1) as $cat)
             <div class="col-12">
-              <div class="collection-card" style="aspect-ratio:16/9;">
-                <img src="{{ $col['img'] }}" alt="{{ $col['title'] }}" style="aspect-ratio:16/9; min-height:unset;">
+              <a href="{{ url('/?category=' . $cat->slug) }}" style="text-decoration:none;" class="collection-card d-block" style="aspect-ratio:16/9;">
+                @if($cat->cover_image)
+                  <img src="{{ asset('storage/' . $cat->cover_image) }}"
+                       alt="{{ $cat->name }}" style="aspect-ratio:16/9; min-height:unset; width:100%; height:100%; object-fit:cover;">
+                @else
+                  <div style="aspect-ratio:16/9; background:#1a1a1a; width:100%;"></div>
+                @endif
                 <div class="collection-card-overlay"></div>
                 <div class="collection-card-content">
-                  @if($col['tag'])
-                    <span class="badge mb-2" style="background:#c9a96e; color:#0f0f0f; font-size:9px; letter-spacing:0.15em; font-weight:600; padding:5px 10px; border-radius:0;">{{ $col['tag'] }}</span>
+                  @if($cat->tag)
+                    <span class="badge mb-2" style="background:#c9a96e; color:#0f0f0f; font-size:9px; letter-spacing:0.15em; font-weight:600; padding:5px 10px; border-radius:0;">
+                      {{ $cat->tag }}
+                    </span>
                   @endif
-                  <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; color:white; line-height:1.1; margin-bottom:0.4rem;">{{ $col['title'] }}</h3>
-                  <p style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:0.8rem;">{{ $col['count'] }} styles</p>
-                  <a href="#" style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#c9a96e; text-decoration:none; font-weight:600;">Shop Now →</a>
+                  <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; color:white; line-height:1.1; margin-bottom:0.4rem;">
+                    {{ $cat->name }}
+                  </h3>
+                  <p style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:0.8rem;">
+                    {{ $cat->products_count }} {{ Str::plural('style', $cat->products_count) }}
+                  </p>
+                  <span style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#c9a96e; font-weight:600;">Shop Now →</span>
                 </div>
-              </div>
+              </a>
             </div>
             @endforeach
           </div>
         </div>
+
       </div>
+      @endif
     </div>
   </section>
 
@@ -467,10 +489,14 @@
           <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:700; line-height:1; margin:0;">The Edit</h2>
         </div>
         <div class="d-flex gap-2 flex-wrap">
-          <button class="tab-btn active" data-tab="new">New Arrivals</button>
-          <button class="tab-btn" data-tab="best">Best Sellers</button>
-          <button class="tab-btn" data-tab="beyond">Beyond Ordinary</button>
-          <button class="tab-btn" data-tab="fragrance">Fragrances</button>
+          <a href="{{ url('/') }}"
+             class="tab-btn {{ !request('category') ? 'active' : '' }}"
+             style="text-decoration:none;">All</a>
+          @foreach($categories as $cat)
+            <a href="{{ url('/?category=' . $cat->slug) }}"
+               class="tab-btn {{ request('category') === $cat->slug ? 'active' : '' }}"
+               style="text-decoration:none;">{{ $cat->name }}</a>
+          @endforeach
         </div>
       </div>
 
@@ -772,14 +798,7 @@
     }, 3500);
   }
 
-  // ── Tabs ──
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      // In real app: filter products by btn.dataset.tab
-    });
-  });
+  // ── Tabs are now real links (?category=slug) — no JS needed ──
 </script>
 
 </body>

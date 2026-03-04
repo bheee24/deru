@@ -245,6 +245,9 @@
     <a href="{{ route('admin.products.index') }}" class="nav-item {{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
       <i class="fas fa-box"></i> Manage Products
     </a>
+    <a href="{{ route('admin.categories.index') }}" class="nav-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
+      <i class="fas fa-tags"></i> Categories
+    </a>
 
     <span class="nav-section-label">People</span>
     <a href="{{ route('admin.customers.index') }}" class="nav-item {{ request()->routeIs('admin.customers.*') ? 'active' : '' }}">
