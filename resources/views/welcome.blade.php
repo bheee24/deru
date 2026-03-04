@@ -299,13 +299,27 @@
       <i class="fas fa-search" style="font-size:15px;"></i>
     </a>
     @if (Route::has('login'))
-      @auth
-        <a href="{{ url('/dashboard') }}" class="text-decoration-none" style="color:#0f0f0f;">
-          <i class="fas fa-user" style="font-size:15px;"></i>
-        </a>
-      @else
-        <a href="{{ route('login') }}" class="text-decoration-none" style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; color:#0f0f0f;">Login</a>
-      @endauth
+     @auth
+       <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : url('/home') }}"
+          class="btn-deru-primary w-25 text-center d-block mb-2" style="text-decoration:none;">
+         {{ auth()->user()->isAdmin() ? 'Admin Panel' : auth()->user()->name }}
+       </a>
+       <form method="POST" action="{{ route('logout') }}">
+         @csrf
+         <button type="submit"
+                 style="width:100%; background:none; border:none; color:rgba(255,255,255,0.4); font-family:'Montserrat',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; padding:10px 0;">
+           Sign Out
+         </button>
+       </form>
+     @else
+       <a href="{{ route('login') }}" class="btn-deru-primary w-100 text-center d-block mb-2" style="text-decoration:none;">Login</a>
+       @if (Route::has('register'))
+         <a href="{{ route('register') }}" class="d-block text-center mt-3"
+            style="color:rgba(255,255,255,0.5); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none;">
+           Create Account
+         </a>
+       @endif
+     @endauth
     @endif
     @php $cartCount = array_sum(array_column(session()->get('cart', []), 'quantity')); @endphp
     <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative" style="color:#0f0f0f;">
