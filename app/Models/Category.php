@@ -35,6 +35,11 @@ class Category extends Model
                 $category->slug = Str::slug($category->name);
             }
         });
+
+
+        static::creating(function ($category) {
+            $category->category_unique_id = Str::orderedUuid();
+        });
     }
 
     // ── Relationships ──
@@ -48,4 +53,6 @@ class Category extends Model
     {
         return $query->orderBy('sort_order')->orderBy('name');
     }
+
+
 }

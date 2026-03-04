@@ -426,7 +426,6 @@
 
         {{-- First category — large card --}}
         <div class="col-12 col-md-6">
-          @with($categories->first())
           <a href="{{ url('/?category=' . $categories->first()->slug) }}" style="text-decoration:none;" class="collection-card h-100 d-block">
             @if($categories->first()->cover_image)
               <img src="{{ asset('storage/' . $categories->first()->cover_image) }}"
@@ -450,7 +449,7 @@
               <span style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#c9a96e; font-weight:600;">Shop Now →</span>
             </div>
           </a>
-          @endwith
+  
         </div>
 
         {{-- Remaining categories — stacked cards --}}
