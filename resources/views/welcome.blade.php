@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DERU | Beyond Ordinary</title>
   <meta name="description" content="Discover DERU's beyond ordinary caps and standout styles.">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -236,6 +237,17 @@
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
+
+    /* ── Toast ── */
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes toastOut {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(10px); }
+    }
+    .cart-count-badge { transition: transform 0.3s ease; }
   </style>
 </head>
 <body>
@@ -295,9 +307,13 @@
         <a href="{{ route('login') }}" class="text-decoration-none" style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; color:#0f0f0f;">Login</a>
       @endauth
     @endif
-    <a href="#" class="text-decoration-none position-relative" style="color:#0f0f0f;">
+    @php $cartCount = array_sum(array_column(session()->get('cart', []), 'quantity')); @endphp
+    <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative" style="color:#0f0f0f;">
       <i class="fas fa-shopping-bag" style="font-size:15px;"></i>
-      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background:#c9a96e; font-size:9px; padding:2px 5px;">0</span>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-count-badge"
+            style="background:#c9a96e; font-size:9px; padding:2px 5px; {{ $cartCount === 0 ? 'display:none;' : '' }}">
+        {{ $cartCount > 0 ? $cartCount : '' }}
+      </span>
     </a>
   </div>
 
@@ -458,37 +474,44 @@
         </div>
       </div>
 
-      {{-- Mock Products --}}
-      @php
-        $products = [
-          ['name' => 'Classic 6-Panel Cap',      'price' => '£85',  'tag' => 'New',       'img' => 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&q=80'],
-          ['name' => 'Snapback — Obsidian',       'price' => '£95',  'tag' => '',          'img' => 'https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?w=600&q=80'],
-          ['name' => 'Beyond Ordinary Dad Cap',   'price' => '£75',  'tag' => 'Best Seller','img' => 'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=600&q=80'],
-          ['name' => 'Signature Cologne — No.1',  'price' => '£120', 'tag' => 'Limited',   'img' => 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=600&q=80'],
-        ];
-      @endphp
-
       <div class="row g-3" id="productGrid">
-        @foreach($products as $product)
+        @forelse($products as $product)
         <div class="col-6 col-md-4 col-lg-3">
           <div class="product-card">
             <div class="product-img-wrap position-relative">
-              <img src="{{ $product['img'] }}" alt="{{ $product['name'] }}" class="product-card-img">
-              @if($product['tag'])
-                <span class="position-absolute top-0 start-0 m-3" style="background:#0f0f0f; color:white; font-size:9px; letter-spacing:0.15em; font-weight:600; padding:4px 10px; text-transform:uppercase;">{{ $product['tag'] }}</span>
+              {{-- Product image --}}
+              @if($product->image)
+                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="product-card-img">
+              @else
+                <div class="product-card-img" style="background:#e8e5de; display:flex; align-items:center; justify-content:center;">
+                  <i class="fas fa-image" style="font-size:2rem; color:#c8c5be;"></i>
+                </div>
               @endif
-              <button class="position-absolute bottom-0 start-0 end-0 m-3 btn-deru-primary text-center border-0 opacity-0 product-add-btn"
-                style="transition: opacity 0.3s ease;">
+
+              {{-- Add to Bag button — visible always on mobile, hover on desktop --}}
+              <button
+                class="position-absolute bottom-0 start-0 end-0 m-3 btn-deru-primary text-center border-0 product-add-btn"
+                style="transition: opacity 0.3s ease; opacity:0; justify-content:center;"
+                data-product-id="{{ $product->id }}"
+                data-product-name="{{ $product->name }}"
+                data-product-price="{{ $product->price }}"
+                data-product-img="{{ $product->image ? asset('storage/' . $product->image) : '' }}"
+              >
+                <i class="fas fa-shopping-bag" style="font-size:10px;"></i>
                 Add to Bag
               </button>
             </div>
             <div class="p-3">
-              <h4 style="font-size:13px; font-weight:500; letter-spacing:0.03em; margin-bottom:4px;">{{ $product['name'] }}</h4>
-              <p style="font-size:13px; font-weight:600; color:#0f0f0f; margin:0;">{{ $product['price'] }}</p>
+              <h4 style="font-size:13px; font-weight:500; letter-spacing:0.03em; margin-bottom:4px;">{{ $product->name }}</h4>
+              <p style="font-size:13px; font-weight:600; color:#0f0f0f; margin:0;">£{{ number_format($product->price, 2) }}</p>
             </div>
           </div>
         </div>
-        @endforeach
+        @empty
+        <div class="col-12 text-center py-5">
+          <p style="color:#7a7a72; font-size:13px;">No products available yet.</p>
+        </div>
+        @endforelse
       </div>
 
       <div class="text-center mt-5">
@@ -639,8 +662,115 @@
     const btn = card.querySelector('.product-add-btn');
     if (!btn) return;
     card.addEventListener('mouseenter', () => btn.style.opacity = '1');
-    card.addEventListener('mouseleave', () => btn.style.opacity = '0');
+    card.addEventListener('mouseleave', () => {
+      if (!btn.classList.contains('adding')) btn.style.opacity = '0';
+    });
   });
+
+  // ── Add to Cart (AJAX) ──
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+  document.querySelectorAll('.product-add-btn').forEach(btn => {
+    btn.addEventListener('click', async function () {
+      const originalHTML = this.innerHTML;
+      this.classList.add('adding');
+      this.innerHTML = '<i class="fas fa-spinner fa-spin" style="font-size:10px;"></i> Adding...';
+      this.disabled = true;
+
+      try {
+        const response = await fetch('{{ route("cart.add") }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({
+            product_id:    this.dataset.productId,
+            product_name:  this.dataset.productName,
+            product_price: this.dataset.productPrice,
+            product_img:   this.dataset.productImg,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // ── Success state ──
+          this.innerHTML = '<i class="fas fa-check" style="font-size:10px;"></i> Added!';
+          this.style.background = '#0f0f0f';
+          this.style.borderColor = '#0f0f0f';
+          this.style.color = 'white';
+
+          // Update cart badge
+          updateCartBadge(data.cart_count);
+
+          // Show toast notification
+          showToast(data.message, data.cart_count);
+
+          // Reset button after 2s
+          setTimeout(() => {
+            this.innerHTML = originalHTML;
+            this.style.background = '';
+            this.style.borderColor = '';
+            this.style.color = '';
+            this.disabled = false;
+            this.classList.remove('adding');
+          }, 2000);
+        }
+      } catch (err) {
+        this.innerHTML = originalHTML;
+        this.disabled = false;
+        this.classList.remove('adding');
+      }
+    });
+  });
+
+  // ── Update cart badge in header ──
+  function updateCartBadge(count) {
+    const badge = document.querySelector('.cart-count-badge');
+    if (!badge) return;
+    badge.textContent = count;
+    badge.style.display = count > 0 ? '' : 'none';
+
+    // Pulse animation
+    badge.style.transform = 'scale(1.4)';
+    setTimeout(() => badge.style.transform = '', 300);
+  }
+
+  // ── Toast notification ──
+  function showToast(message, cartCount) {
+    // Remove existing toast
+    document.querySelector('.deru-toast')?.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'deru-toast';
+    toast.innerHTML = `
+      <div style="display:flex; align-items:center; gap:12px;">
+        <i class="fas fa-check-circle" style="color:#c9a96e; font-size:16px; flex-shrink:0;"></i>
+        <div>
+          <p style="margin:0; font-size:13px; font-weight:500;">${message}</p>
+          <p style="margin:0; font-size:11px; color:rgba(255,255,255,0.55); margin-top:2px;">${cartCount} item${cartCount !== 1 ? 's' : ''} in your bag</p>
+        </div>
+        <a href="{{ route('cart.index') }}" style="margin-left:auto; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#c9a96e; text-decoration:none; white-space:nowrap; flex-shrink:0;">View Bag →</a>
+      </div>
+    `;
+    toast.style.cssText = `
+      position:fixed; bottom:2rem; right:2rem; z-index:9999;
+      background:#0f0f0f; color:white; padding:1rem 1.5rem;
+      border-left:3px solid #c9a96e; min-width:320px; max-width:400px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.2);
+      animation: toastIn 0.4s ease forwards;
+    `;
+
+    document.body.appendChild(toast);
+
+    // Auto dismiss after 3.5s
+    setTimeout(() => {
+      toast.style.animation = 'toastOut 0.3s ease forwards';
+      setTimeout(() => toast.remove(), 300);
+    }, 3500);
+  }
 
   // ── Tabs ──
   document.querySelectorAll('.tab-btn').forEach(btn => {

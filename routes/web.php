@@ -4,16 +4,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CartController;
 
 Auth::routes();
 
-Route::get("/", function(){
-
-    return view("welcome");
-
+Route::get('/', function () {
+    $products = \App\Models\Product::latest()->take(8)->get();
+    return view('welcome', compact('products'));
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/cart',           [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add',      [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update',   [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove',   [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/clear',    [CartController::class, 'clear'])->name('cart.clear');
+
 
 // ── Admin Routes ──
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
