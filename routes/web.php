@@ -83,7 +83,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/checkout',              [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkout',             [CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/checkout/confirmation', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
