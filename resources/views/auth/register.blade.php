@@ -100,8 +100,8 @@
   }
   .deru-input {
     width: 100%;
-    background: rgba(255,255,255,0.04) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
+    background: inherit!important;
+    border: 1px solid white !important;
     border-radius: 0 !important;
     color: white !important;
     font-family: 'Montserrat', sans-serif !important;
@@ -112,7 +112,7 @@
   }
   .deru-input:focus {
     background: rgba(255,255,255,0.07) !important;
-    border-color: #c9a96e !important;
+    border-color: white !important;
     box-shadow: 0 0 0 0 transparent !important;
     color: white !important;
   }
@@ -130,9 +130,9 @@
   /* ── Submit Button ── */
   .btn-register {
     width: 100%;
-    background: #c9a96e;
+    background: white;
     color: #0f0f0f;
-    border: 1px solid #c9a96e;
+    border: 1px solid;
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
     font-weight: 700;
@@ -148,12 +148,13 @@
   .btn-register::after {
     content: '';
     position: absolute; inset: 0;
-    background: rgba(255,255,255,0.15);
+    background:black;
     transform: translateX(-100%);
     transition: transform 0.4s ease;
+    color:white
   }
-  .btn-register:hover::after { transform: translateX(0); }
-  .btn-register:hover { background: #d4b87e; border-color: #d4b87e; }
+  /* .btn-register:hover::after { transform: translateX(0); } */
+  .btn-register:hover { background: inherit;color:white ; }
   .btn-register:active { transform: scale(0.99); }
 
   /* ── Divider ── */
@@ -235,7 +236,7 @@
 
       {{-- Heading --}}
       <div class="mb-5">
-        <p style="font-size:10px; letter-spacing:0.35em; text-transform:uppercase; color:#c9a96e; margin-bottom:0.75rem;">New Here</p>
+        <p style="font-size:10px; letter-spacing:0.35em; text-transform:uppercase; color:white; margin-bottom:0.75rem;">New Here</p>
         <h1 style="font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:700; color:white; line-height:1; margin:0;">
           Create Account
         </h1>
@@ -350,9 +351,9 @@
         <p style="font-size:13px; color:rgba(255,255,255,0.65); margin-bottom:1rem;">Already have an account?</p>
         @if (Route::has('login'))
           <a href="{{ route('login') }}"
-             style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:white; text-decoration:none; border:1px solid rgba(255,255,255,0.15); padding:12px 32px; transition:all 0.3s ease;"
-             onmouseover="this.style.borderColor='#c9a96e'; this.style.color='#c9a96e';"
-             onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='white';">
+             style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase;background:white; color:black; text-decoration:none; border:1px solid ; padding:12px 32px; transition:all 0.3s ease;"
+             onmouseover="this.style.borderColor='white'; this.style.color='white';this.style.background='black'"
+             onmouseout="this.style.borderColor='transparent'; this.style.color='black';this.style.background='white';">
             Sign In
           </a>
         @endif

@@ -25,13 +25,13 @@
 
     .btn-deru-primary {
       display: inline-flex; align-items: center; gap: 10px;
-      background: #c9a96e; color: #0f0f0f;
+      background: black; color:white;
       padding: 14px 36px; font-family: 'Montserrat', sans-serif;
       font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
       text-decoration: none; transition: all 0.3s ease; border: 1px solid #c9a96e;
       cursor: pointer;
     }
-    .btn-deru-primary:hover { background: transparent; color: #c9a96e; }
+    .btn-deru-primary:hover { background: transparent; color: black; }
     .btn-deru-outline {
       display: inline-flex; align-items: center; gap: 10px;
       background: transparent; color: #0f0f0f;
@@ -91,7 +91,7 @@
       @php $cartCount = array_sum(array_column(session()->get('cart', []), 'quantity')); @endphp
       @if($cartCount > 0)
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
-              style="background:#c9a96e; font-size:9px; padding:2px 5px;">{{ $cartCount }}</span>
+              style="background:black; font-size:9px; padding:2px 5px;">{{ $cartCount }}</span>
       @endif
     </a>
   </div>
@@ -113,7 +113,7 @@
 
     {{-- Flash message --}}
     @if(session('success'))
-      <div style="background:rgba(201,169,110,0.1); border:1px solid rgba(201,169,110,0.3); color:#c9a96e; padding:12px 16px; font-size:12px; letter-spacing:0.04em; margin-bottom:1.5rem; display:flex; align-items:center; gap:10px;">
+      <div style="background:black; border:1px solid rgba(201,169,110,0.3); color:red; padding:12px 16px; font-size:12px; letter-spacing:0.04em; margin-bottom:1.5rem; display:flex; align-items:center; gap:10px;">
         <i class="fas fa-check-circle"></i> {{ session('success') }}
       </div>
     @endif
@@ -141,7 +141,7 @@
               <form method="POST" action="{{ route('cart.clear') }}">
                 @csrf
                 <button type="submit" style="background:none; border:none; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#7a7a72; cursor:pointer; transition:color 0.2s ease;"
-                        onmouseover="this.style.color='#dc2626'"
+                        onmouseover="this.style.color='black'"
                         onmouseout="this.style.color='#7a7a72'"
                         onclick="return confirm('Clear your entire bag?')">
                   <i class="fas fa-trash" style="font-size:9px; margin-right:4px;"></i> Clear Bag
@@ -168,7 +168,7 @@
               {{-- Product Info --}}
               <div style="flex:1; min-width:0;">
                 <h4 style="font-size:14px; font-weight:600; letter-spacing:0.03em; margin-bottom:4px;">{{ $item['name'] }}</h4>
-                <p style="font-size:13px; font-weight:600; color:#c9a96e; margin-bottom:1rem;">£{{ number_format($item['price'], 2) }}</p>
+                <p style="font-size:13px; font-weight:600; color:black; margin-bottom:1rem;">£{{ number_format($item['price'], 2) }}</p>
 
                 {{-- Quantity + Remove --}}
                 <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">

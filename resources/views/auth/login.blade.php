@@ -112,7 +112,7 @@
   }
   .deru-input:focus {
     background: rgba(255,255,255,0.07) !important;
-    border-color: #c9a96e !important;
+    border-color:  !important;
     box-shadow: 0 0 0 0 transparent !important;
     color: white !important;
   }
@@ -130,9 +130,9 @@
   /* ── Submit Button ── */
   .btn-login {
     width: 100%;
-    background: #c9a96e;
+    background: white;
     color: #0f0f0f;
-    border: 1px solid #c9a96e;
+   
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
     font-weight: 700;
@@ -148,18 +148,19 @@
   .btn-login::after {
     content: '';
     position: absolute; inset: 0;
-    background: rgba(255,255,255,0.15);
+    background: transparent;
     transform: translateX(-100%);
     transition: transform 0.4s ease;
+    color:white
   }
   .btn-login:hover::after { transform: translateX(0); }
-  .btn-login:hover { background: #d4b87e; border-color: #d4b87e; }
+  .btn-login:hover { background: black; color:white }
   .btn-login:active { transform: scale(0.99); }
 
   /* ── Divider ── */
   .deru-divider {
     display: flex; align-items: center; gap: 1rem;
-    color: rgba(255,255,255,0.55);
+    color: white;
     font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
   }
   .deru-divider::before,
@@ -181,8 +182,8 @@
     border-radius: 0;
   }
   .deru-check-input:checked {
-    background: #c9a96e;
-    border-color: #c9a96e;
+    background: white;
+    border-color: white;
   }
   .deru-check-input:checked::after {
     content: '✓';
@@ -192,7 +193,7 @@
   }
   .deru-check-label {
     font-size: 12px;
-    color: rgba(255,255,255,0.7);
+    color: white;
     letter-spacing: 0.04em;
     cursor: pointer;
   }
@@ -264,7 +265,7 @@
 
       {{-- Heading --}}
       <div class="mb-5">
-        <p style="font-size:10px; letter-spacing:0.35em; text-transform:uppercase; color:#c9a96e; margin-bottom:0.75rem;">Welcome Back</p>
+        <p style="font-size:10px; letter-spacing:0.35em; text-transform:uppercase; color:white; margin-bottom:0.75rem;">Welcome Back</p>
         <h1 style="font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:700; color:white; line-height:1; margin:0;">
           Sign In
         </h1>
@@ -343,9 +344,9 @@
         <div class="d-flex justify-content-between align-items-center mb-2 mt-2">
           @if (Route::has('password.request'))
             <a href="{{ route('password.request') }}"
-               style="font-size:11px; color:rgba(255,255,255,0.55); text-decoration:none; letter-spacing:0.05em; transition:color 0.2s ease;"
-               onmouseover="this.style.color='#c9a96e'"
-               onmouseout="this.style.color='rgba(255,255,255,0.55)'">
+               style="font-size:11px; color:white; text-decoration:none; letter-spacing:0.05em; transition:color 0.2s ease;"
+               onmouseover="this.style.color='white'"
+               onmouseout="this.style.color='white'">
               Forgot password?
             </a>
           @endif
@@ -359,12 +360,12 @@
 
       {{-- Register CTA --}}
       <div class="text-center" style="animation: fadeUp 0.6s ease 0.7s both;">
-        <p style="font-size:13px; color:rgba(255,255,255,0.65); margin-bottom:1rem;">Don't have an account?</p>
+        <p style="font-size:13px; color:white; margin-bottom:1rem;">Don't have an account?</p>
         @if (Route::has('register'))
           <a href="{{ route('register') }}"
-             style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:white; text-decoration:none; border:1px solid rgba(255,255,255,0.15); padding:12px 32px; transition:all 0.3s ease;"
-             onmouseover="this.style.borderColor='#c9a96e'; this.style.color='#c9a96e';"
-             onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='white';">
+             style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase;background:white; color:black; text-decoration:none; ; padding:12px 32px; transition:all 0.3s ease;"
+             onmouseover="this.style.background='black'; this.style.color='white';"
+             onmouseout="this.style.background='white'; this.style.color='black';">
             Create Account
           </a>
         @endif
@@ -373,9 +374,9 @@
       {{-- Back to store --}}
       <div class="text-center mt-4">
         <a href="/"
-           style="font-size:11px; color:rgba(255,255,255,0.45); text-decoration:none; letter-spacing:0.1em; transition:color 0.2s ease;"
-           onmouseover="this.style.color='rgba(255,255,255,0.8)'"
-           onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+           style="font-size:11px; color:white; text-decoration:none; letter-spacing:0.1em; transition:color 0.2s ease;"
+           onmouseover="this.style.color='white'"
+           onmouseout="this.style.color='white'">
           ← Back to Store
         </a>
       </div>

@@ -68,20 +68,96 @@
 
     /* ── Currency Switcher ── */
     .currency-switcher {
-      position: relative; display: flex; align-items: center;
+      position: relative; display: flex; align-items: center;color:white;
     }
     .currency-select {
       appearance: none; -webkit-appearance: none;
-      background: transparent; border: 1px solid rgba(0,0,0,0.15);
-      font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
+      background: inherit;color:black
+       /* border: 1px solid rgba(0,0,0,0.15); */
+      ;font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
       letter-spacing: 0.1em; color: #0f0f0f; padding: 5px 24px 5px 10px;
-      cursor: pointer; outline: none; transition: border-color 0.2s ease;
+      cursor: pointer; outline: none; transition: border-color 0.2s ease;border-radius:85px
+      
     }
-    .currency-select:hover, .currency-select:focus { border-color: #c9a96e; }
+    .currency-select:hover {background-color:black;color:white}
+    
+    .currency-select:focus { border-color: #c9a96e; }
     .currency-switcher::after {
       content: '▾'; position: absolute; right: 8px; font-size: 9px;
       color: #7a7a72; pointer-events: none;
     }
+    .discount-popup {
+  position: fixed;
+  top: -400px;
+  right: 20px;
+  width: 320px;
+  background: #fff; /* white popup background */
+  color: #111; /* dark text */
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2); /* subtle shadow */
+  font-family: Arial, sans-serif;
+  transition: top 0.5s ease;
+  z-index: 9999;
+}
+
+.discount-popup.show {
+  top: 20px; /* slide in */
+}
+
+.discount-popup h3 {
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+
+.discount-popup p {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.discount-popup input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #111; /* black border */
+  border-radius: 5px;
+  background: #fff; /* keep input white */
+  color: #111;
+}
+
+.discount-popup input::placeholder {
+  color: #777;
+}
+
+.discount-popup button {
+  width: 100%;
+  padding: 12px;
+  background: #111; /* black button */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.discount-popup button:hover {
+  background: #333; /* lighter black on hover */
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #111;
+}
+
+.close-btn:hover {
+  color: #555;
+}
+
 
     /* ── Mobile Slide Menu ── */
     .mobile-menu {
@@ -125,7 +201,7 @@
     .hero-eyebrow {
       font-family: 'Montserrat', sans-serif;
       font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
-      color: #c9a96e; margin-bottom: 1.5rem;
+      color: white; margin-bottom: 1.5rem;
       opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
     }
     .hero-title {
@@ -134,7 +210,7 @@
       letter-spacing: -0.02em; margin-bottom: 2rem;
       opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
     }
-    .hero-title em { font-style: italic; color: #c9a96e; }
+    .hero-title em { font-style: italic; color: white; }
     .hero-cta {
       opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;
     }
@@ -153,25 +229,25 @@
     /* ── Buttons ── */
     .btn-deru-primary {
       display: inline-flex; align-items: center; gap: 10px;
-      background: #c9a96e; color: #0f0f0f;
+      background: transparent; color: #0f0f0f;
       padding: 14px 36px; font-family: 'Montserrat', sans-serif;
       font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-      text-decoration: none; transition: all 0.3s ease; border: 1px solid #c9a96e;
-    }
-    .btn-deru-primary:hover { background: transparent; color: #c9a96e; }
+      text-decoration: none; transition: all 0.3s ease;
+      border-radius:85px   }
+    .btn-deru-primary:hover { background: rgba(241,240,236,0.92); color: black; }
     .btn-deru-outline {
       display: inline-flex; align-items: center; gap: 10px;
       background: transparent; color: #0f0f0f;
       padding: 12px 32px; font-family: 'Montserrat', sans-serif;
       font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-      text-decoration: none; transition: all 0.3s ease; border: 1px solid #0f0f0f;
+      text-decoration: none; transition: all 0.3s ease;border-radius:85px ;
     }
     .btn-deru-outline:hover { background: #0f0f0f; color: white; }
 
     /* ── Collection Cards ── */
     .collection-card {
       position: relative; overflow: hidden; cursor: pointer;
-      aspect-ratio: 3/4;
+      aspect-ratio: 3/4;border-radius:20px
     }
     .collection-card img {
       width: 100%; height: 100%; object-fit: cover;
@@ -194,7 +270,7 @@
 
     /* ── Tabs ── */
     .tab-btn {
-      padding: 10px 24px; background: transparent;
+      padding: 10px 24px; background: transparent;color:black;text-decoration:none
       border: 1px solid rgba(0,0,0,0.15); border-radius: 9999px;
       font-family: 'Montserrat', sans-serif; font-size: 12px;
       font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
@@ -205,17 +281,19 @@
 
     /* ── Product Card ── */
     .product-card {
-      background: white; overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: transparent; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;border-radius:20px
     }
     .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
     .product-card-img {
       width: 100%; aspect-ratio: 3/4; object-fit: cover;
-      background: #e8e5de;
+      background: transparent;
       transition: transform 0.5s ease;
     }
     .product-card:hover .product-card-img { transform: scale(1.04); }
-    .product-img-wrap { overflow: hidden; }
+    .product-img-wrap { overflow: hidden; 
+  }
+  
 
     /* ── Story Section ── */
     .story-section {
@@ -265,6 +343,20 @@
       to   { opacity: 0; transform: translateY(10px); }
     }
     .cart-count-badge { transition: transform 0.3s ease; }
+
+    /* Prevent cart/bag badge from overflowing on small screens */
+    @media (max-width: 576px) {
+      .site-header a.position-relative { display: inline-block; }
+      .site-header .cart-count-badge {
+        position: absolute !important;
+        top: -6px !important;
+        right: -6px !important;
+        left: auto !important;
+        transform: none !important;
+        font-size: 10px !important;
+        padding: 2px 6px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -311,7 +403,7 @@
   </div>
 
   {{-- Icons Right --}}
-  <div class="d-flex align-items-center gap-4 justify-content-end" style="flex:1;">
+  <div class="d-flex align-items-center gap-4 justify-content-end" >
 
     {{-- Currency Switcher --}}
     <div class="currency-switcher d-none d-lg-flex">
@@ -332,24 +424,31 @@
     </a>
     @if (Route::has('login'))
      @auth
-       <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : url('/home') }}"
+       <!-- <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : url('/home') }}"
           class="btn-deru-primary w-25 text-center d-block mb-2" style="text-decoration:none;">
          {{ auth()->user()->isAdmin() ? 'Admin Panel' : auth()->user()->name }}
-       </a>
+       </a> -->
        <form method="POST" action="{{ route('logout') }}">
          @csrf
          <button type="submit"
-                 style="width:100%; background:none; border:none; color:rgba(255,255,255,0.4); font-family:'Montserrat',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; padding:10px 0;">
-           Sign Out
-         </button>
+        style="width:100%; background:inherit; border:none; color:black; cursor:pointer; padding:10px 0; display:flex; align-items:center; justify-content:center;">
+    <i class="fa-solid fa-user"></i></button>
        </form>
      @else
-       <a href="{{ route('login') }}" class="btn-deru-primary w-25 text-center d-block mb-2" style="text-decoration:none;">Login</a>
+      
+     <a href="{{ route('login') }}" 
+   class="btn-deru-primary w-25 text-center d-block mb-2 d-none d-md-block" 
+   style="text-decoration:none;">
+   <i class="fas fa-user me-2"></i>
+</a>
+
+</a>
+
        @if (Route::has('register'))
-         <a href="{{ route('register') }}" class="d-block text-center mt-3"
+         <!-- <a href="{{ route('register') }}" class="d-block text-center mt-3"
             style="color:rgba(255,255,255,0.5); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none;">
            Create Account
-         </a>
+         </a> -->
        @endif
      @endauth
     @endif
@@ -357,13 +456,24 @@
     <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative" style="color:#0f0f0f;">
       <i class="fas fa-shopping-bag" style="font-size:15px;"></i>
       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-count-badge"
-            style="background:#c9a96e; font-size:9px; padding:2px 5px; {{ $cartCount === 0 ? 'display:none;' : '' }}">
+            style="background:black; font-size:9px; padding:2px 5px; {{ $cartCount === 0 ? 'display:none;' : '' }}">
         {{ $cartCount > 0 ? $cartCount : '' }}
       </span>
     </a>
   </div>
 
 </header>
+<div id="discountPopup" class="discount-popup">
+  
+  <span class="close-btn" onclick="closePopup()">✕</span>
+
+  <h3>Here's 10% Off</h3>
+  <p>Sign up for email and save on your next order!</p>
+
+  <input type="email" placeholder="Enter your email address">
+  <button>Sign Me Up</button>
+
+</div>
 
 {{-- Mobile Menu Overlay --}}
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -389,9 +499,9 @@
         @auth
           <a href="{{ url('/dashboard') }}" class="btn-deru-primary w-100 text-center">My Account</a>
         @else
-          <a href="{{ route('login') }}" class="btn-deru-primary w-100 text-center d-block mb-2">Login</a>
+          <a href="{{ route('login') }}" class="d-block text-center mt-3" style="color:white; font-size:12px; letter-spacing:0.1em; text-transform:uppercase;">Login</a>
           @if (Route::has('register'))
-            <a href="{{ route('register') }}" class="d-block text-center mt-3" style="color:rgba(255,255,255,0.5); font-size:12px; letter-spacing:0.1em; text-transform:uppercase;">Create Account</a>
+            <!-- <a href="{{ route('register') }}" class="d-block text-center mt-3" style="color:white; font-size:12px; letter-spacing:0.1em; text-transform:uppercase;">Create Account</a> -->
           @endif
         @endauth
       @endif
@@ -399,24 +509,43 @@
 
     {{-- Currency in mobile menu --}}
     <li style="padding:0 1rem 1.5rem;">
-      <p style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:8px; padding:0 4px;">Currency</p>
-      <div class="currency-switcher" style="width:100%;">
-        <select class="currency-select" id="currencySelectMobile" onchange="setCurrency(this.value)"
-                style="width:100%; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.15);">
-          <option value="GBP">£ GBP — British Pound</option>
-          <option value="USD">$ USD — US Dollar</option>
-          <option value="EUR">€ EUR — Euro</option>
-          <option value="NGN">₦ NGN — Nigerian Naira</option>
-          <option value="GHS">₵ GHS — Ghanaian Cedi</option>
-          <option value="ZAR">R ZAR — South African Rand</option>
-          <option value="CAD">C$ CAD — Canadian Dollar</option>
-          <option value="AUD">A$ AUD — Australian Dollar</option>
-        </select>
-      </div>
-      <p style="font-size:10px; color:rgba(255,255,255,0.25); margin-top:8px; padding:0 4px; line-height:1.5;">
-        Display only. Checkout is always processed in GBP.
-      </p>
-    </li>
+  <p style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:8px; padding:0 4px;">Currency</p>
+
+  <div class="d-flex align-items-center gap-2">
+    <!-- Currency Selector -->
+    <div class="currency-switcher" style="flex:1; background:inherit;">
+      <select class="currency-select" id="currencySelectMobile" onchange="setCurrency(this.value)"
+              style="width:100%; background:#000; color:white; padding:8px; appearance:none; -webkit-appearance:none; -moz-appearance:none;">
+        <option value="GBP">£ GBP — British Pound</option>
+        <option value="USD">$ USD — US Dollar</option>
+        <option value="EUR">€ EUR — Euro</option>
+        <option value="NGN">₦ NGN — Nigerian Naira</option>
+        <option value="GHS">₵ GHS — Ghanaian Cedi</option>
+        <option value="ZAR">R ZAR — South African Rand</option>
+        <option value="CAD">C$ CAD — Canadian Dollar</option>
+        <option value="AUD">A$ AUD — Australian Dollar</option>
+      </select>
+    </div>
+
+    <!-- Login Button -->
+    @if (Route::has('login'))
+      @auth
+        <a href="{{ url('/dashboard') }}" class="btn-deru-primary text-center" style="padding:0.5rem 1rem; font-size:12px;">
+          <i class="fas fa-user me-1"></i> Account
+        </a>
+      @else
+        <a href="{{ route('login') }}" class="btn-deru-primary text-center" style="padding:0.5rem 1rem; font-size:12px;">
+          <i class="fas fa-user me-1"></i> Login
+        </a>
+      @endauth
+    @endif
+  </div>
+
+  <p style="font-size:10px; color:rgba(255,255,255,0.25); margin-top:8px; padding:0 4px; line-height:1.5;">
+    Display only. Checkout is always processed in GBP.
+  </p>
+</li>
+
 
   </ul>
 </nav>
@@ -431,13 +560,16 @@
     <div class="hero-grain"></div>
 
     {{-- Mock: Replace with real <video> tag when available --}}
-    <div class="hero-video-placeholder"></div>
+    <video class="hero-video" autoplay muted loop playsinline>
+    <source src="/videos/hero.mp4" type="video/mp4">
+</video>
+
 
     <div class="hero-content">
       <p class="hero-eyebrow">Autumn / Winter 2025</p>
       <h1 class="hero-title">New<br><em>Arrivals</em><br>AW25</h1>
       <div class="hero-cta d-flex gap-3 flex-wrap justify-content-center">
-        <a href="#" class="btn-deru-primary">Shop Now <i class="fas fa-arrow-right ms-1" style="font-size:10px;"></i></a>
+        <a href="#" class="btn-deru-primary"style>Shop Now <i class="fas fa-arrow-right ms-1" style="font-size:10px;"></i></a>
         <a href="#" class="btn-deru-outline" style="color:white; border-color:rgba(255,255,255,0.3);">Explore Collection</a>
       </div>
     </div>
@@ -454,7 +586,7 @@
   <div class="overflow-hidden py-3" style="background:#0f0f0f; border-top:1px solid rgba(255,255,255,0.06);">
     <div class="marquee-track">
       @php
-        $marqueeItems = ['Beyond Ordinary', '✦', 'New Arrivals', '✦', 'AW25 Collection', '✦', 'Premium Caps', '✦', 'Fragrance', '✦', 'Free Delivery Over £100', '✦', 'Beyond Ordinary', '✦', 'New Arrivals', '✦', 'AW25 Collection', '✦', 'Premium Caps', '✦', 'Fragrance', '✦', 'Free Delivery Over £100', '✦'];
+        $marqueeItems = ['Beyond Ordinary', '✦', 'New Arrivals', '✦', 'AW25 Collection', '✦', 'Premium Caps', '✦', 'Free Delivery Over £100', '✦', 'Beyond Ordinary', '✦', 'New Arrivals', '✦', 'AW25 Collection', '✦', 'Premium Caps', '✦', 'Fragrance', '✦', 'Free Delivery Over £100', '✦'];
       @endphp
       @foreach($marqueeItems as $item)
         <span class="px-5" style="font-family:'Montserrat',sans-serif; font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(255,255,255,0.4);">{{ $item }}</span>
@@ -490,17 +622,17 @@
             <div class="collection-card-overlay"></div>
             <div class="collection-card-content">
               @if($categories->first()->tag)
-                <span class="badge mb-2" style="background:#c9a96e; color:#0f0f0f; font-size:9px; letter-spacing:0.15em; font-weight:600; padding:5px 10px; border-radius:0;">
+                <span class="badge mb-2" style="background:transparent; color:white; font-size:20px; letter-spacing:0.15em; font-weight:600; padding:5px 10px; border-radius:0;">
                   {{ $categories->first()->tag }}
                 </span>
               @endif
               <h3 style="font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:white; line-height:1.1; margin-bottom:0.5rem;">
                 {{ $categories->first()->name }}
               </h3>
-              <p style="font-size:12px; color:rgba(255,255,255,0.5); letter-spacing:0.05em; margin-bottom:1rem;">
+              <!-- <p style="font-size:12px; color:rgba(255,255,255,0.5); letter-spacing:0.05em; margin-bottom:1rem;">
                 {{ $categories->first()->products_count }} {{ Str::plural('style', $categories->first()->products_count) }}
-              </p>
-              <span style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#c9a96e; font-weight:600;">Shop Now →</span>
+              </p> -->
+              <span style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:white; font-weight:600;">Shop Now →</span>
             </div>
           </a>
   
@@ -521,17 +653,17 @@
                 <div class="collection-card-overlay"></div>
                 <div class="collection-card-content">
                   @if($cat->tag)
-                    <span class="badge mb-2" style="background:#c9a96e; color:#0f0f0f; font-size:9px; letter-spacing:0.15em; font-weight:600; padding:5px 10px; border-radius:0;">
+                    <span class="badge mb-2" style="background:transparent; color:white; font-size:20px; letter-spacing:0.15em; font-weight:600; padding:5px 10px; border-radius:0;">
                       {{ $cat->tag }}
                     </span>
                   @endif
                   <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; color:white; line-height:1.1; margin-bottom:0.4rem;">
                     {{ $cat->name }}
                   </h3>
-                  <p style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:0.8rem;">
+                  <!-- <p style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:0.8rem;">
                     {{ $cat->products_count }} {{ Str::plural('style', $cat->products_count) }}
-                  </p>
-                  <span style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#c9a96e; font-weight:600;">Shop Now →</span>
+                  </p> -->
+                  <span style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:white; font-weight:600;">Shop Now →</span>
                 </div>
               </a>
             </div>
@@ -552,10 +684,10 @@
 
       <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between mb-5 gap-3">
         <div>
-          <p style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:#7a7a72; margin-bottom:0.5rem;">Featured</p>
-          <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:700; line-height:1; margin:0;">The Edit</h2>
+          <p style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:#7a7a72; margin-bottom:0.5rem;"></p>
+          <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:700; line-height:1; margin:0;"></h2>
         </div>
-        <div class="d-flex gap-2 flex-wrap">
+        <div class="d-flex gap-2 flex-wrap">  
           <a href="{{ url('/') }}"
              class="tab-btn {{ !request('category') ? 'active' : '' }}"
              style="text-decoration:none;">All</a>
@@ -587,7 +719,7 @@
 
                 <button
                   class="btn-deru-primary text-center border-0 product-add-btn"
-                  style="width:100%; justify-content:center; padding:10px; font-size:10px;"
+                  style="width:100%; justify-content:center; padding:10px; font-size:10px;background:rgba(241,240,236,0.92)"
                   data-product-id="{{ $product->id }}"
                   data-product-name="{{ $product->name }}"
                   data-product-price="{{ $product->price }}"
@@ -598,8 +730,8 @@
 
                 <a href="{{ route('products.show', $product) }}"
                    style="display:flex; align-items:center; justify-content:center; gap:6px;
-                          width:100%; padding:8px; background:rgba(241,240,236,0.92);
-                          color:#0f0f0f; font-family:'Montserrat',sans-serif; font-size:10px;
+                          width:100%; padding:8px; background:black;
+                          color:white; font-family:'Montserrat',sans-serif; font-size:10px;
                           font-weight:600; letter-spacing:0.15em; text-transform:uppercase;
                           text-decoration:none; border:1px solid rgba(0,0,0,0.12);
                           transition:background 0.2s ease;">
@@ -612,12 +744,12 @@
             {{-- Card info — product name links to product page ── --}}
             <div class="p-3">
               <a href="{{ route('products.show', $product) }}" style="text-decoration:none; color:inherit;">
-                <h4 style="font-size:13px; font-weight:500; letter-spacing:0.03em; margin-bottom:4px; transition:color 0.2s;"
-                    onmouseover="this.style.color='#c9a96e'" onmouseout="this.style.color='inherit'">
+                <h4 style="font-size:20px; font-weight:500; letter-spacing:0.03em; margin-bottom:4px; transition:color 0.2s;"
+                    onmouseover="this.style.color='black'" onmouseout="this.style.color='inherit'">
                   {{ $product->name }}
                 </h4>
               </a>
-              <p style="font-size:13px; font-weight:600; color:#0f0f0f; margin:0;"
+              <p style="font-size:18px; font-weight:400; color:#0f0f0f; margin:0;"
                  data-price-gbp="{{ $product->price }}">
                 <span class="price-display">£{{ number_format($product->price, 2) }}</span>
               </p>
@@ -644,9 +776,9 @@
     <div class="container-fluid px-4 px-lg-5 py-5" style="position:relative; z-index:1;">
       <div class="row align-items-center g-5">
         <div class="col-12 col-lg-5">
-          <p style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:#c9a96e; margin-bottom:1rem;">Our Story</p>
+          <p style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:white; margin-bottom:1rem;">Our Story</p>
           <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,6vw,5rem); font-weight:700; line-height:1; color:white; margin-bottom:2rem;">
-            Beyond <em style="font-style:italic; color:#c9a96e;">Ordinary</em><br>By Design
+            Beyond <em style="font-style:italic; color:white;">Ordinary</em><br>By Design
           </h2>
           <p style="font-size:14px; line-height:1.8; color:rgba(255,255,255,0.55); margin-bottom:2.5rem; max-width:420px;">
             From the very beginning, our mission has been simple: to create premium products that combine luxury craftsmanship with modern design. Every stitch, every silhouette, every scent is intentional — built for those who refuse to blend in.
@@ -663,7 +795,7 @@
               <img src="https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?w=400&q=80"
                    alt="DERU Detail" style="width:100%; aspect-ratio:1; object-fit:cover;">
               <div class="p-3 text-center" style="background:rgba(201,169,110,0.1); border:1px solid rgba(201,169,110,0.2);">
-                <p style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:700; color:#c9a96e; line-height:1; margin:0;">AW25</p>
+                <p style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:700; color:white; line-height:1; margin:0;background:transparent">AW25</p>
                 <p style="font-size:10px; letter-spacing:0.2em; color:rgba(255,255,255,0.4); margin:0; text-transform:uppercase;">Collection</p>
               </div>
             </div>
@@ -941,6 +1073,18 @@
     if (saved !== 'GBP') applyPrices(saved);
   })();
 </script>
+<script>
+window.onload = function() {
+  setTimeout(function() {
+    document.getElementById("discountPopup").classList.add("show");
+  }, 2000); // appear after 2 seconds
+}
+
+function closePopup() {
+  document.getElementById("discountPopup").classList.remove("show");
+}
+</script>
+
 
 </body>
 </html>

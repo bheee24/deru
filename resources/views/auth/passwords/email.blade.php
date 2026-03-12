@@ -100,7 +100,7 @@
   .deru-input {
     width: 100%;
     background: rgba(255,255,255,0.04) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
+    border: 1px solid white !important;
     border-radius: 0 !important;
     color: white !important;
     font-family: 'Montserrat', sans-serif !important;
@@ -111,7 +111,7 @@
   }
   .deru-input:focus {
     background: rgba(255,255,255,0.07) !important;
-    border-color: #c9a96e !important;
+    border-color: white !important;
     box-shadow: 0 0 0 0 transparent !important;
     color: white !important;
   }
@@ -129,9 +129,9 @@
   /* ── Submit Button ── */
   .btn-forgot {
     width: 100%;
-    background: #c9a96e;
-    color: #0f0f0f;
-    border: 1px solid #c9a96e;
+    background: white;
+    color: black;
+    border: 1px solid ;
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
     font-weight: 700;
@@ -150,9 +150,10 @@
     background: rgba(255,255,255,0.15);
     transform: translateX(-100%);
     transition: transform 0.4s ease;
+    color:white
   }
   .btn-forgot:hover::after { transform: translateX(0); }
-  .btn-forgot:hover { background: #d4b87e; border-color: #d4b87e; }
+  .btn-forgot:hover { background: black; color:white }
   .btn-forgot:active { transform: scale(0.99); }
 
   /* ── Success Alert ── */
@@ -238,14 +239,14 @@
 
       {{-- Heading --}}
       <div class="mb-4">
-        <p style="font-size:10px; letter-spacing:0.35em; text-transform:uppercase; color:#c9a96e; margin-bottom:0.75rem;">Account Recovery</p>
+        <p style="font-size:10px; letter-spacing:0.35em; text-transform:uppercase; color:white; margin-bottom:0.75rem;">Account Recovery</p>
         <h1 style="font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:700; color:white; line-height:1; margin:0;">
           Forgot Password?
         </h1>
       </div>
 
       {{-- Instruction text --}}
-      <p style="font-size:13px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:2rem;">
+      <p style="font-size:13px; color:white; line-height:1.7; margin-bottom:2rem;">
         No problem. Enter your email address below and we'll send you a link to reset your password.
       </p>
 
@@ -298,12 +299,12 @@
 
       {{-- Back to login --}}
       <div class="text-center" style="animation: fadeUp 0.6s ease 0.5s both;">
-        <p style="font-size:13px; color:rgba(255,255,255,0.65); margin-bottom:1rem;">Remember your password?</p>
+        <p style="font-size:13px; color:white; margin-bottom:1rem;">Remember your password?</p>
         @if (Route::has('login'))
           <a href="{{ route('login') }}"
-             style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:white; text-decoration:none; border:1px solid rgba(255,255,255,0.15); padding:12px 32px; transition:all 0.3s ease;"
-             onmouseover="this.style.borderColor='#c9a96e'; this.style.color='#c9a96e';"
-             onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='white';">
+             style="display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:black; text-decoration:none; border:1px solid rgba(255,255,255,0.15); padding:12px 32px; transition:all 0.3s ease;background:white"
+             onmouseover="this.style.borderColor='white'; this.style.color='white';this.style.background='black'"
+             onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='black';this.style.background='white'">
             Sign In
           </a>
         @endif
@@ -312,9 +313,9 @@
       {{-- Back to store --}}
       <div class="text-center mt-4">
         <a href="/"
-           style="font-size:11px; color:rgba(255,255,255,0.45); text-decoration:none; letter-spacing:0.1em; transition:color 0.2s ease;"
-           onmouseover="this.style.color='rgba(255,255,255,0.8)'"
-           onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+           style="font-size:11px; color:white; text-decoration:none; letter-spacing:0.1em; transition:color 0.2s ease;"
+           onmouseover="this.style.color='white'"
+           onmouseout="this.style.color='white'">
           ← Back to Store
         </a>
       </div>

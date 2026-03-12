@@ -54,12 +54,12 @@
     /* ── Buttons ── */
     .btn-add-cart {
       display: flex; align-items: center; justify-content: center; gap: 10px;
-      width: 100%; padding: 16px; background: #c9a96e; color: #0f0f0f;
+      width: 100%; padding: 16px; background: black; color: white;
       font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase; border: 1px solid #c9a96e;
+      letter-spacing: 0.2em; text-transform: uppercase; border: 1px solid ;
       cursor: pointer; transition: all 0.3s ease;
     }
-    .btn-add-cart:hover:not(:disabled) { background: transparent; color: #c9a96e; }
+    .btn-add-cart:hover:not(:disabled) { background: black; color:white; }
     .btn-add-cart:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-add-cart.added { background: #0f0f0f; border-color: #0f0f0f; color: white; }
 
@@ -199,7 +199,7 @@
     <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative" style="color:#0f0f0f;">
       <i class="fas fa-shopping-bag" style="font-size:16px;"></i>
       <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
-            style="background:#c9a96e; font-size:9px; padding:2px 5px; {{ $cartCount === 0 ? 'display:none;' : '' }}">
+            style="background:black; font-size:9px; padding:2px 5px; {{ $cartCount === 0 ? 'display:none;' : '' }}">
         {{ $cartCount ?: '' }}
       </span>
     </a>
@@ -311,13 +311,13 @@
           {{-- Trust signals --}}
           <div style="display:flex; gap:1.5rem; flex-wrap:wrap; padding:1rem 0; border-top:1px solid rgba(0,0,0,0.08); border-bottom:1px solid rgba(0,0,0,0.08); margin-bottom:1.5rem;">
             <div style="display:flex; align-items:center; gap:6px; font-size:11px; color:#7a7a72;">
-              <i class="fas fa-truck" style="color:#c9a96e;"></i> Free UK delivery over £80
+              <i class="fas fa-truck" style="color:#black;"></i> Free UK delivery over £80
             </div>
             <div style="display:flex; align-items:center; gap:6px; font-size:11px; color:#7a7a72;">
-              <i class="fas fa-undo" style="color:#c9a96e;"></i> Easy returns
+              <i class="fas fa-undo" style="color:#black;"></i> Easy returns
             </div>
             <div style="display:flex; align-items:center; gap:6px; font-size:11px; color:#7a7a72;">
-              <i class="fas fa-lock" style="color:#c9a96e;"></i> Secure checkout
+              <i class="fas fa-lock" style="color:#black;"></i> Secure checkout
             </div>
           </div>
 
@@ -375,7 +375,7 @@
       <h2 style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; line-height:1; margin:0;">Related Styles</h2>
     </div>
     <a href="{{ url('/?category='.($product->category?->slug ?? '')) }}"
-       style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#c9a96e; text-decoration:none;">
+       style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:black; text-decoration:none;">
       View All →
     </a>
   </div>
