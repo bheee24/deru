@@ -157,7 +157,7 @@
 {{-- ── Header ── --}}
 <header class="site-header">
   <a href="/" style="text-decoration:none;">
-    <span style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DERU</span>
+    <span style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DeruApparel</span>
   </a>
 
   <div style="display:flex; align-items:center; gap:1rem;">

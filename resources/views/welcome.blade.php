@@ -60,7 +60,7 @@
       position: sticky; top: 0; z-index: 1000;
       display: flex; align-items: center; justify-content: space-between; gap: 1rem;
       padding: 18px 5vw;
-      background: #f1f0ec;
+      background: rgba(241,240,236,0.92);
       border-bottom: 1px solid rgba(0,0,0,0.08);
       transition: box-shadow 0.3s ease;
     }
@@ -229,7 +229,7 @@
     /* ── Buttons ── */
     .btn-deru-primary {
       display: inline-flex; align-items: center; gap: 10px;
-      background: transparent; color: #0f0f0f;
+      background: ; color: #0f0f0f;
       padding: 14px 36px; font-family: 'Montserrat', sans-serif;
       font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
       text-decoration: none; transition: all 0.3s ease;
@@ -397,13 +397,13 @@
 
   {{-- Logo --}}
   <div class="text-center" style="flex:1;">
-    <a href="/" class="text-decoration-none">
-      <span style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DERU</span>
-    </a>
+    <a href="/" class="text-decoration-none"
+      style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DeruApparel</a>
   </div>
 
   {{-- Icons Right --}}
-  <div class="d-flex align-items-center gap-4 justify-content-end" >
+ <div class="d-flex align-items-center gap-3 justify-content-end" style="flex:1;">
+
 
     {{-- Currency Switcher --}}
     <div class="currency-switcher d-none d-lg-flex">
@@ -430,16 +430,16 @@
        </a> -->
        <form method="POST" action="{{ route('logout') }}">
          @csrf
-         <button type="submit"
-        style="width:100%; background:inherit; border:none; color:black; cursor:pointer; padding:10px 0; display:flex; align-items:center; justify-content:center;">
-    <i class="fa-solid fa-user"></i></button>
+         <button type="submit"class="btn-deru-primary  text-center d-block mb-2 d-none d-md-block"
+        style="text-decoration:none">
+    Logout</button>
        </form>
      @else
       
      <a href="{{ route('login') }}" 
-   class="btn-deru-primary w-25 text-center d-block mb-2 d-none d-md-block" 
+   class="btn-deru-primary  text-center d-block mb-2 d-none d-md-block" 
    style="text-decoration:none;">
-   <i class="fas fa-user me-2"></i>
+  login
 </a>
 
 </a>
@@ -481,7 +481,7 @@
 {{-- Mobile Slide Menu --}}
 <nav class="mobile-menu" id="mobileMenu">
   <div class="d-flex align-items-center justify-content-between p-4" style="border-bottom:1px solid rgba(255,255,255,0.08);">
-    <span style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; letter-spacing:0.2em; color:white;">DERU</span>
+    <span style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; letter-spacing:0.2em; color:white;">DeruApparel</span>
     <button class="bg-transparent border-0 text-white fs-4" id="menuClose">×</button>
   </div>
   <ul class="list-unstyled m-0 p-0">
@@ -497,7 +497,12 @@
     <li class="p-4 mt-2">
       @if (Route::has('login'))
         @auth
-          <a href="{{ url('/dashboard') }}" class="btn-deru-primary w-100 text-center">My Account</a>
+         <form method="POST" action="{{ route('logout') }}">
+         @csrf
+         <button type="submit"class="class="d-block text-center mt-3 style="color:white; font-size:12px; letter-spacing:0.1em; text-transform:uppercase;"
+        style="text-decoration:none">
+    Logout</button>
+       </form>
         @else
           <a href="{{ route('login') }}" class="d-block text-center mt-3" style="color:white; font-size:12px; letter-spacing:0.1em; text-transform:uppercase;">Login</a>
           @if (Route::has('register'))
@@ -528,7 +533,7 @@
     </div>
 
     <!-- Login Button -->
-    @if (Route::has('login'))
+    <!-- @if (Route::has('login'))
       @auth
         <a href="{{ url('/dashboard') }}" class="btn-deru-primary text-center" style="padding:0.5rem 1rem; font-size:12px;">
           <i class="fas fa-user me-1"></i> Account
@@ -538,7 +543,9 @@
           <i class="fas fa-user me-1"></i> Login
         </a>
       @endauth
-    @endif
+    @endif -->
+
+    
   </div>
 
   <p style="font-size:10px; color:rgba(255,255,255,0.25); margin-top:8px; padding:0 4px; line-height:1.5;">
@@ -569,7 +576,7 @@
       <p class="hero-eyebrow">Autumn / Winter 2025</p>
       <h1 class="hero-title">New<br><em>Arrivals</em><br>AW25</h1>
       <div class="hero-cta d-flex gap-3 flex-wrap justify-content-center">
-        <a href="#" class="btn-deru-primary"style>Shop Now <i class="fas fa-arrow-right ms-1" style="font-size:10px;"></i></a>
+        <a href="#" class="btn-deru-primary"style="color:white">Shop Now <i class="fas fa-arrow-right ms-1" style="font-size:10px;"></i></a>
         <a href="#" class="btn-deru-outline" style="color:white; border-color:rgba(255,255,255,0.3);">Explore Collection</a>
       </div>
     </div>
@@ -783,7 +790,7 @@
           <p style="font-size:14px; line-height:1.8; color:rgba(255,255,255,0.55); margin-bottom:2.5rem; max-width:420px;">
             From the very beginning, our mission has been simple: to create premium products that combine luxury craftsmanship with modern design. Every stitch, every silhouette, every scent is intentional — built for those who refuse to blend in.
           </p>
-          <a href="#" class="btn-deru-primary">Discover Our Story</a>
+          <a href="#" class="btn-deru-primary" style="background:white">Discover Our Story</a>
         </div>
         <div class="col-12 col-lg-7">
           <div class="row g-3">
@@ -812,7 +819,7 @@
     <div class="container py-4">
       <p style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:#7a7a72; margin-bottom:1rem;">Exclusive Access</p>
       <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.5rem); font-weight:700; margin-bottom:1rem;">Get 10% Off Your First Order</h2>
-      <p style="font-size:14px; color:#7a7a72; margin-bottom:2.5rem;">Join the DERU community for early access to new arrivals and exclusive offers.</p>
+      <p style="font-size:14px; color:#7a7a72; margin-bottom:2.5rem;">Join the DeruApparel community for early access to new arrivals and exclusive offers.</p>
       <form class="d-flex gap-0 justify-content-center mx-auto" style="max-width:480px;" onsubmit="return false;">
         <input type="email" placeholder="Your email address"
                class="flex-grow-1 px-4 py-3 border-0 outline-none"
@@ -831,7 +838,7 @@
   <div class="container-fluid px-4 px-lg-5">
     <div class="row g-5 pb-5" style="border-bottom:1px solid rgba(255,255,255,0.08);">
       <div class="col-12 col-md-4">
-        <h3 style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; letter-spacing:0.2em; color:white; margin-bottom:1rem;">DERU</h3>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; letter-spacing:0.2em; color:white; margin-bottom:1rem;">DeruApparel</h3>
         <p style="font-size:13px; line-height:1.8; color:rgba(255,255,255,0.4); max-width:260px;">Premium caps and fragrance for those who live beyond ordinary.</p>
         <div class="d-flex gap-3 mt-4">
           @foreach(['instagram', 'tiktok', 'twitter'] as $social)
@@ -865,7 +872,7 @@
     </div>
 
     <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 pt-4">
-      <p style="font-size:12px; color:rgba(255,255,255,0.3); margin:0;">© {{ date('Y') }} DERU. All rights reserved.</p>
+      <p style="font-size:12px; color:rgba(255,255,255,0.3); margin:0;">© {{ date('Y') }} DeruApparel. All rights reserved.</p>
       <div class="d-flex gap-3 align-items-center">
         @foreach(['Visa', 'Mastercard', 'PayPal', 'Apple Pay'] as $payment)
           <span style="font-size:11px; color:rgba(255,255,255,0.25); letter-spacing:0.05em;">{{ $payment }}</span>

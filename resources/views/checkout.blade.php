@@ -28,17 +28,17 @@
     /* Steps */
     .step-indicator { display: flex; align-items: center; gap: 0; }
     .step { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(0,0,0,0.3); font-weight: 500; }
-    .step.active { color: #0f0f0f; }
-    .step.done   { color: #c9a96e; }
+    .step.active { color: black; }
+    .step.done   { color: black; }
     .step-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; background: rgba(0,0,0,0.08); color: rgba(0,0,0,0.3); flex-shrink: 0; }
     .step.active .step-num { background: #0f0f0f; color: white; }
-    .step.done   .step-num { background: #c9a96e; color: #0f0f0f; }
+    .step.done   .step-num { background: white; color: #0f0f0f; }
     .step-divider { width: 32px; height: 1px; background: rgba(0,0,0,0.1); margin: 0 8px; }
 
     /* Form */
     .checkout-label { display: block; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #0f0f0f; margin-bottom: 6px; }
     .checkout-input { width: 100%; padding: 12px 14px; border: 1px solid rgba(0,0,0,0.15); background: white; font-family: 'Montserrat', sans-serif; font-size: 13px; color: #0f0f0f; outline: none; transition: border-color 0.2s ease; border-radius: 0; }
-    .checkout-input:focus { border-color: #c9a96e; }
+    .checkout-input:focus { border-color: black; }
     .checkout-input.is-invalid { border-color: #dc2626; }
 
     /* Stripe Element container */
@@ -58,12 +58,12 @@
     /* Buttons */
     .btn-deru-primary {
       display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      background: #c9a96e; color: #0f0f0f; padding: 14px 36px;
+      background: black; color: white; padding: 14px 36px;
       font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
       letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
       transition: all 0.3s ease; border: 1px solid #c9a96e; cursor: pointer; width: 100%;
     }
-    .btn-deru-primary:hover:not(:disabled) { background: transparent; color: #c9a96e; }
+    .btn-deru-primary:hover:not(:disabled) { background: transparent; color: black; border-color: black; }
     .btn-deru-primary:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-deru-outline {
       display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -112,7 +112,7 @@
 
 <header class="site-header">
   <a href="/" style="text-decoration:none;">
-    <span style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DERU</span>
+    <span style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DeruApparel</span>
   </a>
   <div class="step-indicator d-none d-md-flex">
     <div class="step done">
@@ -329,11 +329,11 @@
           {{-- ── Stripe Card Element ── --}}
           <div class="checkout-card">
             <h3 class="checkout-card-title">
-              <i class="fab fa-stripe" style="color:#635bff; margin-right:8px;"></i>
+              <!-- <i class="fab fa-stripe" style="color:#635bff; margin-right:8px;"></i> -->
               Payment Details
             </h3>
             <p style="font-size:12px; color:#7a7a72; margin-bottom:1.5rem;">
-              Your card details are encrypted and handled securely by Stripe. We never store your card number.
+              Your card details are encrypted and handled securely . We never store your card number.
             </p>
 
             <div class="row g-3">

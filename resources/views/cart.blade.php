@@ -60,11 +60,11 @@
     .qty-input:focus { border-color: #c9a96e; }
 
     .remove-btn {
-      background: none; border: none; cursor: pointer;
-      color: rgba(0,0,0,0.25); font-size: 12px;
+      background: inherit; border: none; cursor: pointer;
+      color: black; font-size: 12px;
       transition: color 0.2s ease; padding: 0;
     }
-    .remove-btn:hover { color: #dc2626; }
+    .remove-btn:hover { color: black; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
@@ -78,7 +78,7 @@
 {{-- Header --}}
 <header class="site-header">
   <a href="/" style="text-decoration:none;">
-    <span style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DERU</span>
+    <span style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DeruApparel</span>
   </a>
   <div class="d-flex align-items-center gap-4">
     @auth
@@ -241,7 +241,7 @@
                 <span style="color:#16a34a; font-weight:500;">{{ $total >= 100 ? 'Free' : '£' . number_format(5.99, 2) }}</span>
               </div>
               @if($total < 100)
-              <p style="font-size:11px; color:#7a7a72; margin-top:6px; margin-bottom:0;">
+              <p style="font-size:11px; color:black; margin-top:6px; margin-bottom:0;">
                 Add £{{ number_format(100 - $total, 2) }} more for free delivery
               </p>
               @endif
@@ -284,8 +284,8 @@
 
 <footer style="background:#0f0f0f; color:white; padding:2rem 5vw; margin-top:4rem;">
   <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-    <span style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; letter-spacing:0.2em;">DERU</span>
-    <p style="font-size:12px; color:rgba(255,255,255,0.3); margin:0;">© {{ date('Y') }} DERU. All rights reserved.</p>
+    <span style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; letter-spacing:0.2em;">DeruApparel</span>
+    <p style="font-size:12px; color:rgba(255,255,255,0.3); margin:0;">© {{ date('Y') }} DeruApparel. All rights reserved.</p>
   </div>
 </footer>
 

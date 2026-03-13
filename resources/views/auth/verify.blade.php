@@ -38,7 +38,7 @@
     /* ── Icon circle ── */
     .icon-circle {
       width: 72px; height: 72px; border-radius: 50%;
-      background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.3);
+      background: black; border: 1px solid rgba(201,169,110,0.3);
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 1.75rem;
     }
@@ -46,13 +46,13 @@
     /* ── Buttons ── */
     .btn-deru {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 13px 32px; background: #c9a96e; color: #0f0f0f;
+      padding: 13px 32px; background: black; color: white;
       font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
       letter-spacing: 0.18em; text-transform: uppercase;
-      border: 1px solid #c9a96e; text-decoration: none; cursor: pointer;
+      border: 1px solid white; text-decoration: none; cursor: pointer;
       transition: all 0.25s ease; width: 100%;
     }
-    .btn-deru:hover { background: transparent; color: #c9a96e; }
+    .btn-deru:hover { background: transparent; color: black;border: 1px solid black; }
     .btn-deru:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-deru-outline {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -62,7 +62,7 @@
       border: 1px solid rgba(0,0,0,0.2); text-decoration: none; cursor: pointer;
       transition: all 0.25s ease; width: 100%;
     }
-    .btn-deru-outline:hover { border-color: #0f0f0f; color: #0f0f0f; }
+    .btn-deru-outline:hover { border-color: #0f0f0f; color: white;background:black }
 
     /* ── Steps ── */
     .steps { text-align: left; margin: 2rem 0; }
@@ -92,7 +92,7 @@
 
       {{-- Icon --}}
       <div class="icon-circle">
-        <i class="fas fa-envelope" style="font-size:1.5rem; color:#c9a96e;"></i>
+        <i class="fas fa-envelope" style="font-size:1.5rem; color:white;"></i>
       </div>
 
       {{-- Heading --}}
@@ -152,7 +152,7 @@
 
       <p style="font-size:11px; color:#7a7a72; margin-top:1.5rem; line-height:1.7;">
         Wrong email address?
-        <a href="{{ route('profile.email') }}" style="color:#c9a96e; text-decoration:none;">Update it in your profile</a>
+        <a href="{{ route('profile.email') }}" style="color:#7a7a72; text-decoration:none;">Update it in your profile</a>
         after verifying, or sign out and register again.
       </p>
 

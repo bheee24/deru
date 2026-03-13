@@ -229,7 +229,7 @@
   {{-- Logo --}}
   <div class="sidebar-logo">
     <a href="{{ route('admin.dashboard') }}" style="text-decoration:none;">
-      <span style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:700; letter-spacing:0.25em; color:white;">DERU</span>
+      <span style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:700; letter-spacing:0.25em; color:white;">DeruApparel</span>
       <span style="display:block; font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-top:2px;">Admin Panel</span>
     </a>
   </div>

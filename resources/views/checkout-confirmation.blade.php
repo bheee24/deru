@@ -39,7 +39,7 @@
 
 <header class="site-header">
   <a href="/" style="text-decoration:none;">
-    <span style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DERU</span>
+    <span style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DeruApparel</span>
   </a>
 </header>
 
@@ -170,7 +170,7 @@
 </main>
 
 <footer style="text-align:center; padding:2rem; margin-top:4rem; border-top:1px solid rgba(0,0,0,0.06);">
-  <p style="font-size:12px; color:#7a7a72;">© {{ date('Y') }} DERU. All rights reserved.</p>
+  <p style="font-size:12px; color:#7a7a72;">© {{ date('Y') }} DeruApparel. All rights reserved.</p>
 </footer>
 </body>
 </html>

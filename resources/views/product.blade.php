@@ -157,7 +157,7 @@
 {{-- ── Header ── --}}
 <header class="site-header" id="siteHeader">
   <a href="/" style="text-decoration:none;">
-    <span style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DERU</span>
+    <span style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; letter-spacing:0.2em; color:#0f0f0f;">DeruApparel</span>
   </a>
 
   <nav class="d-none d-lg-flex align-items-center gap-4">
@@ -353,7 +353,7 @@
             <div class="accordion-body">
               Please contact us at
               <a href="{{ 'mailto:support@' . config('app.domain', 'deru.com') }}"
-                 style="color:#c9a96e;">support&#64;deru.com</a>
+                 style="color:#c9a96e;">support&#64;DeruApparel.com</a>
               with your order reference.
               We cannot make changes or cancellations once an order has been placed, but we'll do our best to help.
             </div>
