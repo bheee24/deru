@@ -1,0 +1,6 @@
+{
+  "build": {
+    "builder": "nixpacks",
+    "watchPatterns": ["**/*.php", "**/*.js", "**/*.css", "composer.json", "package.json"]
+  }
+}
